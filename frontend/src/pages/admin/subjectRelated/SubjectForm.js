@@ -29,22 +29,6 @@ const QuestionForm = () => {
             desc:'',
             isTrue:false
         }]
-        // answer1: {
-        //     desc: "",
-        //     isTrue: false
-        // },
-        // answer2: {
-        //     desc: "",
-        //     isTrue: false
-        // },
-        // answer3: {
-        //     desc: "",
-        //     isTrue: false
-        // },
-        // answer4: {
-        //     desc: "",
-        //     isTrue: false
-        // }
     }])
 
     const dispatch = useDispatch()
@@ -54,7 +38,7 @@ const QuestionForm = () => {
     const userState = useSelector(state => state.user);
     const { status, currentUser, response, error } = userState;
 
-    const sclassName = params.id
+    const titleId = params.id
     const adminID = currentUser._id
     const address = "Subject"
 
@@ -118,7 +102,7 @@ const QuestionForm = () => {
     };
 
     const fields = {
-        sclassName,
+        titleId,
         questions
         // adminID,
     };
@@ -151,7 +135,6 @@ const QuestionForm = () => {
     return (
         <Box onSubmit={submitHandler} component="form" sx={styles.boxField}>
             <Box mb={2}>
-                {console.log(questions)}
                 <Typography variant="h6" >Add Questions</Typography>
             </Box>
             <Grid container spacing={2}>

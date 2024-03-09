@@ -1,48 +1,28 @@
 import React, { useState } from 'react'
 import { StyledTableCell, StyledTableRow } from './styles';
-import { Table, TableBody, TableContainer, TableHead, TablePagination } from '@mui/material';
+import { Table, TableBody, TableContainer, TableHead, TablePagination,Box } from '@mui/material';
 
 const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     return (
-        <>
-            <TableContainer>
+        <Box >
+            <TableContainer >
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <StyledTableRow>
-                            {columns.map((column) => (
-                                <StyledTableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
-                                >
-                                    {column.label}
-                                </StyledTableCell>
-                            ))}
-                            <StyledTableCell align="center">
-                                Actions
+                            <StyledTableCell >
+                                QuestionsList
                             </StyledTableCell>
                         </StyledTableRow>
                     </TableHead>
-                    <TableBody>
+                    <TableBody >
                         {rows
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
                                     <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                        {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <StyledTableCell key={column.id} align={column.align}>
-                                                    {
-                                                        column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value
-                                                    }
-                                                </StyledTableCell>
-                                            );
-                                        })}
+                                        <StyledTableCell>{row.name}</StyledTableCell>
                                         <StyledTableCell align="center">
                                             <ButtonHaver row={row} />
                                         </StyledTableCell>
@@ -64,7 +44,7 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                     setPage(0);
                 }}
             />
-        </>
+        </Box>
     )
 }
 

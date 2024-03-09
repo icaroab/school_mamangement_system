@@ -27,6 +27,12 @@ const SideBar = () => {
                     <ListItemIcon>
                         <ClassOutlinedIcon color={location.pathname.startsWith('/Admin/classes') ? 'primary' : 'inherit'} />
                     </ListItemIcon>
+                    <ListItemText primary="class Management" />
+                </ListItemButton>
+                <ListItemButton component={Link} to="/questions">
+                    <ListItemIcon>
+                        <ClassOutlinedIcon color={location.pathname.startsWith('/questions') ? 'primary' : 'inherit'} />
+                    </ListItemIcon>
                     <ListItemText primary="Test Management" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/students">

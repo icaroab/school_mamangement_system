@@ -2,17 +2,36 @@ const Subject = require('../models/subjectSchema.js');
 const Teacher = require('../models/teacherSchema.js');
 const Student = require('../models/studentSchema.js');
 const Question = require('../models/questionSchema.js');
+const Sclass = require('../models/sclassSchema.js');
 
 const subjectCreate = async (req, res) => {
-    console.log(req.body)
-    const {questions} = req.body
     try{
-        const newQuestions = await Question.create({questions});
+        const newQuestions = await Question.create(req.body);
         res.status(201).send(newQuestions)
     }catch(err){
         res.status(500).json(err);
     }
 };
+const getQuestions = async(req,res)=>{
+    const {id} = req.params
+    try {
+        let questions = await Question.find({titleId:id}).populate({
+            path:'titleId',
+            populate:'sclassName'
+        })
+        res.send(questions)
+    }catch(err){
+        res.status(500).json(err)
+    }
+}
+const getQuestionTitle = async(req,res)=>{
+    try {
+        let questionTitle = await Sclass.find()
+        res.send(questionTitle)
+    }catch(err){
+        res.status(500).json(err)
+    }
+}
 
 const allSubjects = async (req, res) => {
     try {
@@ -143,4 +162,4 @@ const deleteSubjectsByClass = async (req, res) => {
 };
 
 
-module.exports = { subjectCreate, freeSubjectList, classSubjects, getSubjectDetail, deleteSubjectsByClass, deleteSubjects, deleteSubject, allSubjects };
+module.exports = { subjectCreate, getQuestions,getQuestionTitle,freeSubjectList, classSubjects, getSubjectDetail, deleteSubjectsByClass, deleteSubjects, deleteSubject, allSubjects };

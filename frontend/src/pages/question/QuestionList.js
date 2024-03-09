@@ -2,56 +2,37 @@ import { useEffect, useState } from 'react';
 import { IconButton, Box, Menu, MenuItem, ListItemIcon, Tooltip } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { deleteUser } from '../../../redux/userRelated/userHandle';
-import { getAllSclasses } from '../../../redux/sclassRelated/sclassHandle';
-import { BlueButton, GreenButton } from '../../../components/buttonStyles';
-import TableTemplate from '../../../components/TableTemplate';
-
+import { useNavigate, useLocation } from 'react-router-dom';
+import { BlueButton, GreenButton } from '../../components/buttonStyles';
+import TableTemplate from '../../components/TableTemplate';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import styled from 'styled-components';
-import SpeedDialTemplate from '../../../components/SpeedDialTemplate';
-import Popup from '../../../components/Popup';
+import useQuestion from '../hook/useQuestion';
+import SpeedDialTemplate from '../../components/SpeedDialTemplate';
+import Popup from '../../components/Popup';
 
-const ShowClasses = () => {
+const QuestionList = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch();
-
-  const { sclassesList, loading, error, getresponse } = useSelector((state) => state.sclass);
+  const {pathname} = useLocation()
   const { currentUser } = useSelector(state => state.user)
-
+    const {titles, isLoading} = useQuestion()
   const adminID = currentUser._id
 
-  useEffect(() => {
-    dispatch(getAllSclasses(adminID, "Sclass"));
-  }, [adminID, dispatch]);
-
-  if (error) {
-    console.log(error)
-  }
+//   if (error) {
+//     console.log(error)
+//   }
 
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
-  const deleteHandler = (deleteID, address) => {
-    console.log(deleteID);
-    console.log(address);
-    setMessage("Sorry the delete function has been disabled for now.")
-    setShowPopup(true)
-    // dispatch(deleteUser(deleteID, address))
-    //   .then(() => {
-    //     dispatch(getAllSclasses(adminID, "Sclass"));
-    //   })
-  }
-
   const sclassColumns = [
-    { id: 'name', label: 'Questions List', minWidth: 170 },
+    { id: 'name', label: 'Question Title', minWidth: 170 },
   ]
 
-  const sclassRows = sclassesList && sclassesList.length > 0 && sclassesList.map((sclass) => {
+  const questionRows = titles && titles.length > 0 && titles.map((sclass) => {
     return {
       name: sclass.sclassName,
       id: sclass._id,
@@ -65,11 +46,11 @@ const ShowClasses = () => {
     ];
     return (
       <ButtonContainer>
-        <IconButton onClick={() => deleteHandler(row.id, "Sclass")} color="secondary">
+        <IconButton color="secondary">
           <DeleteIcon color="error" />
         </IconButton>
         <BlueButton variant="contained"
-          onClick={() => navigate("/Admin/classes/class/" + row.id)}>
+          onClick={() => navigate("/questions/" + row.id)}>
           View
         </BlueButton>
         <ActionMenu actions={actions} />
@@ -91,7 +72,7 @@ const ShowClasses = () => {
     return (
       <>
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-          <Tooltip title="Add Students & Subjects">
+          {/* <Tooltip title="Add Students & Subjects">
             <IconButton
               onClick={handleClick}
               size="small"
@@ -103,7 +84,7 @@ const ShowClasses = () => {
               <h5>Add</h5>
               <SpeedDialIcon />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </Box>
         <Menu
           anchorEl={anchorEl}
@@ -138,38 +119,41 @@ const ShowClasses = () => {
     },
     {
       icon: <DeleteIcon color="error" />, name: 'Delete All Classes',
-      action: () => deleteHandler(adminID, "Sclasses")
+    //   action: () => deleteHandler(adminID, "Sclasses")
     },
   ];
 
   return (
     <>
-      {loading ?
+      {isLoading ?
         <div>Loading...</div>
-        :
+        : 
         <>
-          {getresponse ?
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+            {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>{
+
+            }
               <GreenButton variant="contained" onClick={() => navigate("/Admin/addclass")}>
                 Add Class
               </GreenButton>
             </Box>
-            :
+            : */}
             <>
-              {Array.isArray(sclassesList) && sclassesList.length > 0 &&
-                <TableTemplate buttonHaver={SclassButtonHaver} columns={sclassColumns} rows={sclassRows} />
-              }
+            {
+               Array.isArray(titles) && titles.length>0 && 
+               <TableTemplate columns={titles} rows={questionRows} buttonHaver={SclassButtonHaver}/>
+            }
+             
               <SpeedDialTemplate actions={actions} />
-            </>}
+            </>
         </>
-      }
-      <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+      } 
+      {/* <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} /> */}
 
     </>
   );
 };
 
-export default ShowClasses;
+export default QuestionList;
 
 const styles = {
   styledPaper: {

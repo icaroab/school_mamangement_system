@@ -27,6 +27,10 @@ const questionSchema = new mongoose.Schema({
         }
 
     ],
+    titleId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'sclass'
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("question", questionSchema);

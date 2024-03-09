@@ -38,7 +38,7 @@ const AddClass = () => {
 
     useEffect(() => {
         if (status === 'added' && tempDetails) {
-            navigate("/Admin/classes/class/" + tempDetails._id)
+            navigate("/Admin/addsubject/" + tempDetails._id)
             dispatch(underControl())
             setLoader(false)
         }
