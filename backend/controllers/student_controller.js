@@ -3,14 +3,15 @@ const Student = require('../models/studentSchema.js');
 const Subject = require('../models/subjectSchema.js');
 
 const studentRegister = async (req, res) => {
+    console.log(req.body)
     try {
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt);
 
         const existingStudent = await Student.findOne({
             rollNum: req.body.rollNum,
-            school: req.body.adminID,
-            sclassName: req.body.sclassName,
+            // school: req.body.adminID
+            // sclassName: req.body.sclassName,
         });
 
         if (existingStudent) {
@@ -19,7 +20,7 @@ const studentRegister = async (req, res) => {
         else {
             const student = new Student({
                 ...req.body,
-                school: req.body.adminID,
+                // school: req.body.adminID,
                 password: hashedPass
             });
 
@@ -34,13 +35,14 @@ const studentRegister = async (req, res) => {
 };
 
 const studentLogIn = async (req, res) => {
+    console.log(req.body)
     try {
         let student = await Student.findOne({ rollNum: req.body.rollNum, name: req.body.studentName });
         if (student) {
             const validated = await bcrypt.compare(req.body.password, student.password);
             if (validated) {
-                student = await student.populate("school", "schoolName")
-                student = await student.populate("sclassName", "sclassName")
+                // student = await student.populate("school", "schoolName")
+                // student = await student.populate("sclassName", "sclassName")
                 student.password = undefined;
                 student.examResult = undefined;
                 student.attendance = undefined;

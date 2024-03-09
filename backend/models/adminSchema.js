@@ -18,11 +18,6 @@ const adminSchema = new mongoose.Schema({
         type: String,
         default: "Admin"
     },
-    schoolName: {
-        type: String,
-        unique: true,
-        required: true
-    }
 });
 
 module.exports = mongoose.model("admin", adminSchema)

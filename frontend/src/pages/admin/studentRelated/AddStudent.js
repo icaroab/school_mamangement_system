@@ -20,7 +20,6 @@ const AddStudent = ({ situation }) => {
     const [rollNum, setRollNum] = useState('');
     const [password, setPassword] = useState('')
     const [className, setClassName] = useState('')
-    const [sclassName, setSclassName] = useState('')
 
     const adminID = currentUser._id
     const role = "Student"
@@ -28,7 +27,6 @@ const AddStudent = ({ situation }) => {
 
     useEffect(() => {
         if (situation === "Class") {
-            setSclassName(params.id);
         }
     }, [params.id, situation]);
 
@@ -40,31 +38,13 @@ const AddStudent = ({ situation }) => {
         dispatch(getAllSclasses(adminID, "Sclass"));
     }, [adminID, dispatch]);
 
-    const changeHandler = (event) => {
-        if (event.target.value === 'Select Class') {
-            setClassName('Select Class');
-            setSclassName('');
-        } else {
-            const selectedClass = sclassesList.find(
-                (classItem) => classItem.sclassName === event.target.value
-            );
-            setClassName(selectedClass.sclassName);
-            setSclassName(selectedClass._id);
-        }
-    }
 
-    const fields = { name, rollNum, password, sclassName, adminID, role, attendance }
+    const fields = { name, rollNum, password, adminID, role, attendance }
 
     const submitHandler = (event) => {
         event.preventDefault()
-        if (sclassName === "") {
-            setMessage("Please select a classname")
-            setShowPopup(true)
-        }
-        else {
-            setLoader(true)
-            dispatch(registerUser(fields, role))
-        }
+        setLoader(true)
+        dispatch(registerUser(fields, role))
     }
 
     useEffect(() => {
@@ -95,25 +75,6 @@ const AddStudent = ({ situation }) => {
                         onChange={(event) => setName(event.target.value)}
                         autoComplete="name" required />
 
-                    {
-                        situation === "Student" &&
-                        <>
-                            <label>Class</label>
-                            <select
-                                className="registerInput"
-                                value={className}
-                                onChange={changeHandler} required>
-                                <option value='Select Class'>Select Class</option>
-                                {sclassesList.map((classItem, index) => (
-                                    <option key={index} value={classItem.sclassName}>
-                                        {classItem.sclassName}
-                                    </option>
-                                ))}
-                            </select>
-                        </>
-                    }
-
-                    <label>Roll Number</label>
                     <input className="registerInput" type="number" placeholder="Enter student's Roll Number..."
                         value={rollNum}
                         onChange={(event) => setRollNum(event.target.value)}

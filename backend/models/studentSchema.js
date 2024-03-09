@@ -13,16 +13,6 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    sclassName: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'sclass',
-        required: true,
-    },
-    school: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'admin',
-        required: true,
-    },
     role: {
         type: String,
         default: "Student"

@@ -6,18 +6,17 @@ const dotenv = require("dotenv")
 const app = express()
 const Routes = require("./routes/route.js")
 
-const PORT = process.env.PORT || 5000
 
 dotenv.config();
+const PORT = process.env.PORT || 6000
 
 // app.use(bodyParser.json({ limit: '10mb', extended: true }))
 // app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 
 app.use(express.json({ limit: '10mb' }))
 app.use(cors())
-
 mongoose
-    .connect(process.env.MONGO_URL, {
+    .connect('mongodb://127.0.0.1:27017/school', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
