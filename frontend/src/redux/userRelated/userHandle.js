@@ -109,7 +109,7 @@ export const updateUser = (fields, id, address) => async (dispatch) => {
 
 export const addStuff = (fields, address) => async (dispatch) => {
     dispatch(authRequest());
-
+    console.log(fields)
     try {
         const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/${address}Create`, fields, {
             headers: { 'Content-Type': 'application/json' },

@@ -1,13 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, Grid, Box, Typography, CircularProgress } from "@mui/material";
+import { Button, TextField, Grid, Box, Typography, CircularProgress, Checkbox, FormControlLabel } from "@mui/material";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addStuff } from '../../../redux/userRelated/userHandle';
 import { underControl } from '../../../redux/userRelated/userSlice';
 import Popup from '../../../components/Popup';
-
-const SubjectForm = () => {
-    const [subjects, setSubjects] = useState([{ subName: "", subCode: "", sessions: "" }]);
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+const QuestionForm = () => {
+    const [questions, setQuestions] = useState([{
+        question: "",
+        answer:[{
+            id:1,
+            desc:'',
+            isTrue:false
+        },
+        {
+            id:2,
+            desc:'',
+            isTrue:false
+        },
+        {
+            id:3,
+            desc:'',
+            isTrue:false
+        },
+        {
+            id:4,
+            desc:'',
+            isTrue:false
+        }]
+        // answer1: {
+        //     desc: "",
+        //     isTrue: false
+        // },
+        // answer2: {
+        //     desc: "",
+        //     isTrue: false
+        // },
+        // answer3: {
+        //     desc: "",
+        //     isTrue: false
+        // },
+        // answer4: {
+        //     desc: "",
+        //     isTrue: false
+        // }
+    }])
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -23,43 +61,66 @@ const SubjectForm = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState("");
     const [loader, setLoader] = useState(false)
-
-    const handleSubjectNameChange = (index) => (event) => {
-        const newSubjects = [...subjects];
-        newSubjects[index].subName = event.target.value;
-        setSubjects(newSubjects);
+    const handleQuestionNameChange = (index) => (event) => {
+        const newQuestions = [...questions];
+        newQuestions[index].question = event.target.value;
+        setQuestions(newQuestions);
     };
 
-    const handleSubjectCodeChange = (index) => (event) => {
-        const newSubjects = [...subjects];
-        newSubjects[index].subCode = event.target.value;
-        setSubjects(newSubjects);
+    const handleAnswer = (index, id) => (event) => {
+        const newQuestions = [...questions]
+        const newAnswer = {
+            id:id+1,
+            desc:event.target.value,
+            isTrue:false
+        }
+        newQuestions[index]['answer'][id]=newAnswer
+        setQuestions(newQuestions);
+    };
+    const handleAnswerCheck = (index, id) => event => {
+        const newQuestions = [...questions]
+        newQuestions[index]['answer'][id].isTrue=event.target.checked
+        setQuestions(newQuestions);
+    }
+    const handleAddQuestion = () => {
+            setQuestions([...questions, {
+                question: "",
+                answer:[{
+                    id:1,
+                    desc:'',
+                    isTrue:false
+                },
+                {
+                    id:2,
+                    desc:'',
+                    isTrue:false
+                },
+                {
+                    id:3,
+                    desc:'',
+                    isTrue:false
+                },
+                {
+                    id:4,
+                    desc:'',
+                    isTrue:false
+                }]
+                
+            }]);
+
+        // }
     };
 
-    const handleSessionsChange = (index) => (event) => {
-        const newSubjects = [...subjects];
-        newSubjects[index].sessions = event.target.value || 0;
-        setSubjects(newSubjects);
-    };
-
-    const handleAddSubject = () => {
-        setSubjects([...subjects, { subName: "", subCode: "" }]);
-    };
-
-    const handleRemoveSubject = (index) => () => {
-        const newSubjects = [...subjects];
-        newSubjects.splice(index, 1);
-        setSubjects(newSubjects);
+    const handleRemoveQuestion = (index) => () => {
+        const newQuestions = [...questions];
+        newQuestions.splice(index, 1);
+        setQuestions(newQuestions);
     };
 
     const fields = {
         sclassName,
-        subjects: subjects.map((subject) => ({
-            subName: subject.subName,
-            subCode: subject.subCode,
-            sessions: subject.sessions,
-        })),
-        adminID,
+        questions
+        // adminID,
     };
 
     const submitHandler = (event) => {
@@ -68,9 +129,10 @@ const SubjectForm = () => {
         dispatch(addStuff(fields, address))
     };
 
+
     useEffect(() => {
         if (status === 'added') {
-            navigate("/Admin/subjects");
+            navigate("/Admin/questions");
             dispatch(underControl())
             setLoader(false)
         }
@@ -87,63 +149,68 @@ const SubjectForm = () => {
     }, [status, navigate, error, response, dispatch]);
 
     return (
-        <form onSubmit={submitHandler}>
+        <Box onSubmit={submitHandler} component="form" sx={styles.boxField}>
             <Box mb={2}>
-                <Typography variant="h6" >Add Subjects</Typography>
+                {console.log(questions)}
+                <Typography variant="h6" >Add Questions</Typography>
             </Box>
             <Grid container spacing={2}>
-                {subjects.map((subject, index) => (
-                    <React.Fragment key={index}>
-                        <Grid item xs={6}>
+                {questions.map((question, qId) => (
+                    <React.Fragment key={qId}>
+                        <Grid item xs={12}>
                             <TextField
                                 fullWidth
-                                label="Subject Name"
+                                label="Question 1"
                                 variant="outlined"
-                                value={subject.subName}
-                                onChange={handleSubjectNameChange(index)}
+                                value={question.question}
+                                onChange={handleQuestionNameChange(qId)}
                                 sx={styles.inputField}
+                                // error={!!questionError}
                                 required
                             />
                         </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                fullWidth
-                                label="Subject Code"
-                                variant="outlined"
-                                value={subject.subCode}
-                                onChange={handleSubjectCodeChange(index)}
-                                sx={styles.inputField}
-                                required
-                            />
+                        <Grid item xs={12}>
+                            {
+                                new Array(4).fill(0).map((_, id) => <div key={id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <TextField
+                                        fullWidth
+                                        label={`Answer${id}`}
+                                        variant="outlined"
+                                        value={question[`Answer${id + 1}`]?.desc}
+                                        onChange={handleAnswer(qId, id)}
+                                        sx={styles.inputField}
+                                        // error={!!answersError[id]}
+                                        required
+                                    />
+                                    <FormControlLabel
+                                        control={<Checkbox
+                                            onChange={handleAnswerCheck(qId, id)}
+                                            {...label}
+                                            sx={{ marginLeft: '10px' }}
+                                        />}></FormControlLabel>
+
+                                </div>)
+                            }
+
+
                         </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                fullWidth
-                                label="Sessions"
-                                variant="outlined"
-                                type="number"
-                                inputProps={{ min: 0 }}
-                                value={subject.sessions}
-                                onChange={handleSessionsChange(index)}
-                                sx={styles.inputField}
-                                required
-                            />
-                        </Grid>
+
                         <Grid item xs={6}>
                             <Box display="flex" alignItems="flex-end">
-                                {index === 0 ? (
+                                {qId === 0 ? (
                                     <Button
                                         variant="outlined"
                                         color="primary"
-                                        onClick={handleAddSubject}
+                                        onClick={handleAddQuestion}
+                                        sx={styles.inputField}
                                     >
-                                        Add Subject
+                                        Add Question
                                     </Button>
                                 ) : (
                                     <Button
                                         variant="outlined"
                                         color="error"
-                                        onClick={handleRemoveSubject(index)}
+                                        onClick={handleRemoveQuestion(qId)}
                                     >
                                         Remove
                                     </Button>
@@ -165,11 +232,11 @@ const SubjectForm = () => {
                 </Grid>
                 <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
             </Grid>
-        </form>
+        </Box>
     );
 }
 
-export default SubjectForm
+export default QuestionForm
 
 const styles = {
     inputField: {
@@ -179,5 +246,11 @@ const styles = {
         '& .MuiOutlinedInput-notchedOutline': {
             borderColor: '#838080',
         },
+        marginTop: '10px'
     },
+    boxField: {
+        paddingRight: '10px',
+        paddingLeft: '10px',
+        paddingTop: '20px'
+    }
 };

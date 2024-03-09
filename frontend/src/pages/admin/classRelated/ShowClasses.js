@@ -118,8 +118,8 @@ const ShowClasses = () => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          {actions.map((action) => (
-            <MenuItem onClick={action.action}>
+          {actions.map((action,id) => (
+            <MenuItem onClick={action.action} key={id}>
               <ListItemIcon fontSize="small">
                 {action.icon}
               </ListItemIcon>
