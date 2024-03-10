@@ -23,12 +23,7 @@ const SideBar = () => {
                     </ListItemIcon>
                     <ListItemText primary="Home" />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/classes">
-                    <ListItemIcon>
-                        <ClassOutlinedIcon color={location.pathname.startsWith('/Admin/classes') ? 'primary' : 'inherit'} />
-                    </ListItemIcon>
-                    <ListItemText primary="class Management" />
-                </ListItemButton>
+                
                 <ListItemButton component={Link} to="/questions">
                     <ListItemIcon>
                         <ClassOutlinedIcon color={location.pathname.startsWith('/questions') ? 'primary' : 'inherit'} />
@@ -39,21 +34,22 @@ const SideBar = () => {
                     <ListItemIcon>
                         <PersonOutlineIcon color={location.pathname.startsWith("/Admin/students") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
-                    <ListItemText primary="Add Students" />
+                    <ListItemText primary="Students Management" />
                 </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/notices">
+                {/* <ListItemButton component={Link} to="/Admin/notices">
                     <ListItemIcon>
                         <AnnouncementOutlinedIcon color={location.pathname.startsWith("/Admin/notices") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Notices" />
-                </ListItemButton>
+                </ListItemButton> */}
             </React.Fragment>
             <Divider sx={{ my: 1 }} />
             <React.Fragment>
                 <ListSubheader component="div" inset>
                     User
                 </ListSubheader>
-                <ListItemButton component={Link} to="/Admin/profile">
+                {/* <ListItemButton component={Link} to="/Admin/profile"> */}
+                <ListItemButton component={Link} to="#">
                     <ListItemIcon>
                         <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Admin/profile") ? 'primary' : 'inherit'} />
                     </ListItemIcon>

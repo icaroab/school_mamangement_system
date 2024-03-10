@@ -1,12 +1,13 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-const useQuestion =(id)=>{
+const useQuestion =(questionId)=>{
     const [questions, setQuestions] = useState([])
     const [titles, setTitles] = useState([])
     const [isLoading, setLoading] = useState(false)
-    const getQuestions = async(id)=>{
+    const [submittedAnswer, setSubmittedAnswer] = useState({})
+    const getQuestions = async(userId,questionId)=>{
         setLoading(true)
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/questions/${id}`, {
+        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/questions/${userId}/${questionId}`, {
             headers: { 'Content-Type': 'application/json' },
         });
         setLoading(false)
@@ -21,15 +22,27 @@ const useQuestion =(id)=>{
         setTitles(result.data)
         setLoading(false)
     }
+    const submitAnswer = async(userId,questionId,res)=>{
+        console.log(res)
+        setLoading(true)
+        const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/question/submit/${userId}/${questionId}`,res)
+        setLoading(false)
+    }
+    const getAnswer = async(userId, questionId)=>{
+        // setLoading(true)
+        // const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/question/submit/${userId}/${questionId}`)
+        // console.log(result.data)
+        // setSubmittedAnswer(result.data)
+        // setLoading(false)
+    }
     useEffect(()=>{
         getQuestionTitles()
     },[])
     useEffect(()=>{
-        if(id!==undefined){
-
-            getQuestions(id)
-        }
-    },[id])
+        // if(questionId!==undefined){
+        //     getQuestions(userId,questionId)
+        // }
+    },[questionId])
     const createQuestion = (payload)=>{
 
     }
@@ -38,7 +51,9 @@ const useQuestion =(id)=>{
         questions,
         titles,
         getQuestions,
-        createQuestion
+        createQuestion,
+        submitAnswer,
+        getAnswer
     }
 }
 export default useQuestion

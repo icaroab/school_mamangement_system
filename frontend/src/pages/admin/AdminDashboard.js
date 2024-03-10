@@ -43,6 +43,8 @@ import ShowClasses from './classRelated/ShowClasses';
 import AccountMenu from '../../components/AccountMenu';
 import QuestionList from '../question/QuestionList';
 import QuestionDetail from '../question/QuestionDetail';
+import StudentList from '../student1/StudentList';
+import StudentDetails from '../student1/StudentDetails';
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
@@ -138,6 +140,9 @@ const AdminDashboard = () => {
                         <Route path="/questions" element={<QuestionList />} />
                         <Route path="/questions/:id" element={<QuestionDetail/>}/>
                         <Route path="/logout" element={<Logout />} />
+
+                        <Route path='/student' element={<StudentList/>} />
+                        <Route path='/student/:sId' element={<StudentDetails/>}/>
                     </Routes>
                 </Box>
             </Box>

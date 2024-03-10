@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const Student = require('../models/studentSchema.js');
 const Subject = require('../models/subjectSchema.js');
-
+const Answer = require('../models/answerSchema.js');
+const Question = require('../models/questionSchema.js');
 const studentRegister = async (req, res) => {
     console.log(req.body)
     try {
@@ -59,13 +60,12 @@ const studentLogIn = async (req, res) => {
 };
 
 const getStudents = async (req, res) => {
+    console.log('ssssss')
     try {
-        let students = await Student.find({ school: req.params.id }).populate("sclassName", "sclassName");
+        let students = await Student.find().select('name')
         if (students.length > 0) {
-            let modifiedStudents = students.map((student) => {
-                return { ...student._doc, password: undefined };
-            });
-            res.send(modifiedStudents);
+            console.log(students)
+            res.send(students)
         } else {
             res.send({ message: "No students found" });
         }
@@ -73,7 +73,55 @@ const getStudents = async (req, res) => {
         res.status(500).json(err);
     }
 };
+const getTestsByStudent = async(req, res)=>{
+    console.log(req.params)
+    const {sId} = req.params
+    try{
+        const result = await Answer.find({userId: sId}).populate({
+            path:'userId',
+            select:'name rollNum'
+        }).populate({
+            path:'sectionId',
+            select:'sclassName'
+        })
+        console.log('-----------------------------------------')
+        console.log('result.......',result)
+        // console.log('question........',(await Question.find({ titleId: result[0].sectionId._id }).exec())[0])
+        // console.log('answer........',result[0].answer)
+        
+        let promises = result.map(async(item,index)=>{
+            return {
+                _id:item._id,
+                userName:item.userId.name,
+                rollNum:item.userId.rollNum,
+                section:item.sectionId.sclassName,
+                answer:comparedResult(item.answer,(await Question.find({ titleId: item.sectionId._id }).exec())[0].questions),
+                createdAt:item.createdAt
+            }
+        })
+        const modifiedResult = await Promise.all(promises)
+        console.log('modifiedResult........',modifiedResult[0].answer[0])
+        res.json(modifiedResult)
+    }catch(err){
+        res.status(500).json(err);
 
+    }
+}
+const comparedResult = (answer, questions) => {
+    console.log('sssssssssxxxxxxxxxxxxx', answer, questions)
+    console.log('xxxxxxxxxxx', questions[0].answer)
+    const result = questions.map((question, qIndex) => ({
+        question: question.question,
+        questionId: question._id,
+        answer: question.answer.map((ans, aIndex) => ({
+            id: ans.id,
+            desc: ans.desc,
+            isTrue: ans.isTrue,
+            isChecked: answer.filter(a => a.qId === qIndex && a.id === aIndex)[0].isChecked
+        }))
+    }))
+    return result
+}
 const getStudentDetail = async (req, res) => {
     try {
         let student = await Student.findById(req.params.id)
@@ -285,7 +333,7 @@ module.exports = {
     studentAttendance,
     deleteStudentsByClass,
     updateExamResult,
-
+    getTestsByStudent,
     clearAllStudentsAttendanceBySubject,
     clearAllStudentsAttendance,
     removeStudentAttendanceBySubject,

@@ -16,14 +16,14 @@ import Popup from '../../components/Popup';
 
 const QuestionList = () => {
   const navigate = useNavigate()
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
   const { currentUser } = useSelector(state => state.user)
-    const {titles, isLoading} = useQuestion()
+  const { titles, isLoading } = useQuestion()
   const adminID = currentUser._id
 
-//   if (error) {
-//     console.log(error)
-//   }
+  //   if (error) {
+  //     console.log(error)
+  //   }
 
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
@@ -99,7 +99,7 @@ const QuestionList = () => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          {actions.map((action,id) => (
+          {actions.map((action, id) => (
             <MenuItem onClick={action.action} key={id}>
               <ListItemIcon fontSize="small">
                 {action.icon}
@@ -119,7 +119,7 @@ const QuestionList = () => {
     },
     {
       icon: <DeleteIcon color="error" />, name: 'Delete All Classes',
-    //   action: () => deleteHandler(adminID, "Sclasses")
+      //   action: () => deleteHandler(adminID, "Sclasses")
     },
   ];
 
@@ -127,27 +127,15 @@ const QuestionList = () => {
     <>
       {isLoading ?
         <div>Loading...</div>
-        : 
+        :
         <>
-            {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>{
-
-            }
-              <GreenButton variant="contained" onClick={() => navigate("/Admin/addclass")}>
-                Add Class
-              </GreenButton>
-            </Box>
-            : */}
-            <>
-            {
-               Array.isArray(titles) && titles.length>0 && 
-               <TableTemplate columns={titles} rows={questionRows} buttonHaver={SclassButtonHaver}/>
-            }
-             
-              <SpeedDialTemplate actions={actions} />
-            </>
+          {
+            Array.isArray(titles) && titles.length > 0 &&
+            <TableTemplate columns={titles} rows={questionRows} buttonHaver={SclassButtonHaver} />
+          }
+          {currentUser.role == 'Admin' && <SpeedDialTemplate actions={actions} />}
         </>
-      } 
-      {/* <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} /> */}
+      }
 
     </>
   );

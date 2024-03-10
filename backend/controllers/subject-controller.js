@@ -3,36 +3,101 @@ const Teacher = require('../models/teacherSchema.js');
 const Student = require('../models/studentSchema.js');
 const Question = require('../models/questionSchema.js');
 const Sclass = require('../models/sclassSchema.js');
+const Answer = require('../models/answerSchema.js');
 
 const subjectCreate = async (req, res) => {
-    try{
+    try {
         const newQuestions = await Question.create(req.body);
         res.status(201).send(newQuestions)
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err);
     }
 };
-const getQuestions = async(req,res)=>{
-    const {id} = req.params
+const getQuestions = async (req, res) => {
+    console.log(req.params)
+    const { userId, qId } = req.params
+    let sampleAnswer = []
     try {
-        let questions = await Question.find({titleId:id}).populate({
-            path:'titleId',
-            populate:'sclassName'
-        })
-        res.send(questions)
-    }catch(err){
+        const submittedAnswer = await Answer.find({ userId: userId, sectionId: qId })
+        console.log(submittedAnswer)
+        if (submittedAnswer.length > 0) {
+            sampleAnswer = await Question.find({ titleId: qId }).exec()
+            console.log(comparedResult(submittedAnswer[0].answer, sampleAnswer[0].questions))
+            res.json({
+                submitted: true,
+                submitter: await Student.findById(userId).select('name'),
+                sectionId: qId,
+                result: comparedResult(submittedAnswer[0].answer, sampleAnswer[0].questions)
+            })
+        } else {
+            console.log((await Question.find({ titleId: qId }).exec())[0].questions)
+            res.json({
+                submitted: false,
+                submitter: null,
+                sectionId: qId,
+                result: (await Question.find({ titleId: qId }).exec())[0].questions
+            })
+        }
+    } catch (err) {
         res.status(500).json(err)
     }
 }
-const getQuestionTitle = async(req,res)=>{
+const getQuestionTitle = async (req, res) => {
     try {
         let questionTitle = await Sclass.find()
         res.send(questionTitle)
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err)
     }
 }
-
+const postAnswer = async (req, res) => {
+    console.log('ssss')
+    console.log(req.params)
+    console.log(req.body)
+    const { userId, qId } = req.params
+    const data = {
+        userId,
+        sectionId: qId,
+        answer: req.body
+    }
+    try {
+        const result = await Answer.create(data);
+        res.send(result)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}
+const getAnswer = async (req, res) => {
+    // console.log(req.params)
+    // const {userId,qId} = req.params
+    // let sampleAnswer = []
+    // try{
+    //     const submittedAnswer = await Answer.find({userId:userId,sectionId:qId})
+    //     if (submittedAnswer.length>0){
+    //          sampleAnswer = await Question.find({titleId:qId}).exec() 
+    //     }
+    //     res.json({
+    //         submitted:true,
+    //         submitter:await Student.findById(userId).select('name'),
+    //         sectionId:qId,
+    //         result:comparedResult(submittedAnswer[0].answer,sampleAnswer[0].questions)
+    //     })
+    // }catch(err){
+    //     res.status(500).json(err)
+    // }
+}
+const comparedResult = (answer, questions) => {
+    const result = questions.map((question, qIndex) => ({
+        question: question.question,
+        answer: question.answer.map((ans, aIndex) => ({
+            id: ans.id,
+            desc: ans.desc,
+            isTrue: ans.isTrue,
+            isChecked: answer.filter(a => a.qId === qIndex && a.id === aIndex)[0].isChecked
+        }))
+    }))
+    return result
+}
 const allSubjects = async (req, res) => {
     try {
         let subjects = await Subject.find({ school: req.params.id })
@@ -162,4 +227,4 @@ const deleteSubjectsByClass = async (req, res) => {
 };
 
 
-module.exports = { subjectCreate, getQuestions,getQuestionTitle,freeSubjectList, classSubjects, getSubjectDetail, deleteSubjectsByClass, deleteSubjects, deleteSubject, allSubjects };
+module.exports = { subjectCreate, getQuestions, getQuestionTitle, postAnswer, getAnswer, freeSubjectList, classSubjects, getSubjectDetail, deleteSubjectsByClass, deleteSubjects, deleteSubject, allSubjects };

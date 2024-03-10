@@ -15,9 +15,6 @@ const StudentHomePage = () => {
     const dispatch = useDispatch();
 
     const { userDetails, currentUser, loading, response } = useSelector((state) => state.user);
-    console.log(userDetails)
-    console.log(currentUser)
-    console.log(response)
     const { subjectsList } = useSelector((state) => state.sclass);
     const [subjectAttendance, setSubjectAttendance] = useState([]);
     useEffect(() => {

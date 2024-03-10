@@ -64,7 +64,7 @@ const ShowStudents = () => {
         return {
             name: student.name,
             rollNum: student.rollNum,
-            sclassName: student.sclassName.sclassName,
+            // sclassName: student.sclassName.sclassName,
             id: student._id,
         };
     })
@@ -110,15 +110,15 @@ const ShowStudents = () => {
         };
         return (
             <>
-                <IconButton onClick={() => deleteHandler(row.id, "Student")}>
+                {/* <IconButton onClick={() => deleteHandler(row.id, "Student")}>
                     <PersonRemoveIcon color="error" />
-                </IconButton>
+                </IconButton> */}
                 <BlueButton variant="contained"
                     onClick={() => navigate("/Admin/students/student/" + row.id)}>
                     View
                 </BlueButton>
                 <React.Fragment>
-                    <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+                    {/* <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
                         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
                         <BlackButton
                             size="small"
@@ -130,7 +130,7 @@ const ShowStudents = () => {
                         >
                             {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
                         </BlackButton>
-                    </ButtonGroup>
+                    </ButtonGroup> */}
                     <Popper
                         sx={{
                             zIndex: 1,

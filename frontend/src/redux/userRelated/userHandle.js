@@ -12,6 +12,7 @@ import {
     getFailed,
     getError,
 } from './userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const loginUser = (fields, role) => async (dispatch) => {
     dispatch(authRequest());
@@ -46,6 +47,8 @@ export const registerUser = (fields, role) => async (dispatch) => {
         else {
             dispatch(authFailed(result.data.message));
         }
+        // useNavigate('Admin/students')
+
     } catch (error) {
         dispatch(authError(error));
     }

@@ -73,6 +73,7 @@ const AddStudent = ({ situation }) => {
                     <input className="registerInput" type="text" placeholder="Enter student's name..."
                         value={name}
                         onChange={(event) => setName(event.target.value)}
+                        style={{ marginBottom: "10px" }}
                         autoComplete="name" required />
 
                     <input className="registerInput" type="number" placeholder="Enter student's Roll Number..."

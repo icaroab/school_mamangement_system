@@ -21,8 +21,9 @@ const {
     clearAllStudentsAttendanceBySubject,
     clearAllStudentsAttendance,
     removeStudentAttendanceBySubject,
-    removeStudentAttendance } = require('../controllers/student_controller.js');
-const { subjectCreate,getQuestions,getQuestionTitle, classSubjects, deleteSubjectsByClass, getSubjectDetail, deleteSubject, freeSubjectList, allSubjects, deleteSubjects } = require('../controllers/subject-controller.js');
+    removeStudentAttendance ,
+    getTestsByStudent} = require('../controllers/student_controller.js');
+const { subjectCreate,getQuestions,getQuestionTitle,postAnswer,getAnswer, classSubjects, deleteSubjectsByClass, getSubjectDetail, deleteSubject, freeSubjectList, allSubjects, deleteSubjects } = require('../controllers/subject-controller.js');
 const { teacherRegister, teacherLogIn, getTeachers, getTeacherDetail, deleteTeachers, deleteTeachersByClass, deleteTeacher, updateTeacherSubject, teacherAttendance } = require('../controllers/teacher-controller.js');
 
 // Admin
@@ -116,6 +117,11 @@ router.delete("/Subject/:id", deleteSubject)
 router.delete("/Subjects/:id", deleteSubjects)
 router.delete("/SubjectsClass/:id", deleteSubjectsByClass)
 //Question
-router.get('/questions/:id', getQuestions);
+router.get('/questions/:userId/:qId', getQuestions);
 router.get('/titles', getQuestionTitle)
+router.post('/question/submit/:userId/:qId', postAnswer)
+router.get('/question/submit/:userId/:qId', getAnswer)
+
+router.get('/students', getStudents)
+router.get('/students/:sId/tests', getTestsByStudent)
 module.exports = router;
