@@ -11,8 +11,8 @@ const studentRegister = async (req, res) => {
 
         const existingStudent = await Student.findOne({
             rollNum: req.body.rollNum,
-            // school: req.body.adminID
-            // sclassName: req.body.sclassName,
+            school: req.body.adminID,
+            sclassName: req.body.sclassName,
         });
 
         if (existingStudent) {
@@ -28,7 +28,7 @@ const studentRegister = async (req, res) => {
             let result = await student.save();
 
             result.password = undefined;
-            res.send(result);
+            res.status(201).send(result);
         }
     } catch (err) {
         res.status(500).json(err);
@@ -123,12 +123,13 @@ const comparedResult = (answer, questions) => {
     return result
 }
 const getStudentDetail = async (req, res) => {
+    console.log('sssssssssssssssssssssssssssssssssss')
     try {
         let student = await Student.findById(req.params.id)
-            .populate("school", "schoolName")
-            .populate("sclassName", "sclassName")
-            .populate("examResult.subName", "subName")
-            .populate("attendance.subName", "subName sessions");
+            // .populate("school", "schoolName")
+            // .populate("sclassName", "sclassName")
+            // .populate("examResult.subName", "subName")
+            // .populate("attendance.subName", "subName sessions");
         if (student) {
             student.password = undefined;
             res.send(student);

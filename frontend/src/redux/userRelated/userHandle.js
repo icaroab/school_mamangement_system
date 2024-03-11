@@ -38,10 +38,13 @@ export const registerUser = (fields, role) => async (dispatch) => {
         const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/${role}Reg`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
-        if (result.data.schoolName) {
-            dispatch(authSuccess(result.data));
-        }
-        else if (result.data.school) {
+        console.log(result)
+        // if (result.data.rollNum) {
+        //     console.log('xcvxcv')
+        //     dispatch(authSuccess(result.data));
+        // }
+        // else
+         if (result.data.rollNum) {
             dispatch(stuffAdded());
         }
         else {

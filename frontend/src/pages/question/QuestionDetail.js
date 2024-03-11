@@ -46,6 +46,7 @@ const QuestionDetail = () => {
                 })
             })
         })
+        navigate(-1)
         submitAnswer(currentUser._id, id, answerTemplate)
     }
 

@@ -73,7 +73,7 @@ const ViewStudent = () => {
                                                 </Typography>
                                                 {
                                                     ans.answer.map((answerItem, index) => {
-                                                        return <GradeIcon key={index} sx={answerItem.isTrue===answerItem.isChecked?styles.starGrey:styles.starGold} />
+                                                        return <GradeIcon key={index} sx={answerItem.isTrue===answerItem.isChecked?styles.starGold:styles.starGrey} />
                                                     })
                                                 }
 

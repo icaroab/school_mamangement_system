@@ -12,7 +12,7 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                     <TableHead>
                         <StyledTableRow>
                             <StyledTableCell >
-                                QuestionsList
+                               List
                             </StyledTableCell>
                         </StyledTableRow>
                     </TableHead>
