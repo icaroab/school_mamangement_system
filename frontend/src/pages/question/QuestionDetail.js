@@ -59,10 +59,9 @@ const QuestionDetail = () => {
         <Box mb={2}>
             <Typography variant="h6" >{questions[0]?.titleId.sclassName}</Typography>
         </Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
             {questions.result?.length > 0 && questions.result.map((question, qId) => (
-                <StyledPaper>
-                    <Container key={qId} >
+                <StyledPaper key={qId}  >
                         <Grid item xs={12} >
                             <TextField
                                 fullWidth
@@ -75,10 +74,10 @@ const QuestionDetail = () => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} style={{ marginBottom: '20px' }}>
+                        <Grid item xs={12} mb={2}>
                             {
                                 question.answer?.length > 0 && question.answer.map((item, id) => {
-                                    return <Grid key={id} sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                                    return <Grid key={id} mb={2}>
                                         {
                                             (currentRole === "Admin" ? <FormControlLabel
                                                 control={<Checkbox
@@ -111,7 +110,6 @@ const QuestionDetail = () => {
                             }
                         </Grid>
 
-                    </Container>
 
                 </StyledPaper>
             ))}
@@ -157,11 +155,15 @@ const styles = {
         paddingLeft: '20px',
         paddingTop: '40px',
         paddingBottom: '40px'
-    }
+    },
+
 };
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
-  margin: 20px;
+margin-right:10%;
+margin-left:10%;
+
+  margin-bottom: 20px;
   width: 100%;
 `;

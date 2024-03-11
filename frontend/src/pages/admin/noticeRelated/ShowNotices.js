@@ -6,7 +6,6 @@ import {
 } from '@mui/material';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getAllNotices } from '../../../redux/noticeRelated/noticeHandle';
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import TableTemplate from '../../../components/TableTemplate';
 import { GreenButton } from '../../../components/buttonStyles';
@@ -20,7 +19,6 @@ const ShowNotices = () => {
     const { currentUser } = useSelector(state => state.user)
 
     useEffect(() => {
-        dispatch(getAllNotices(currentUser._id, "Notice"));
     }, [currentUser._id, dispatch]);
 
     if (error) {
@@ -30,7 +28,6 @@ const ShowNotices = () => {
     const deleteHandler = (deleteID, address) => {
         dispatch(deleteUser(deleteID, address))
             .then(() => {
-                dispatch(getAllNotices(currentUser._id, "Notice"));
             })
     }
 
