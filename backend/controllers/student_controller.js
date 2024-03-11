@@ -10,8 +10,6 @@ const studentRegister = async (req, res) => {
 
         const existingStudent = await Student.findOne({
             rollNum: req.body.rollNum,
-            school: req.body.adminID,
-            sclassName: req.body.sclassName,
         });
 
         if (existingStudent) {

@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { StyledTableCell, StyledTableRow } from './styles';
 import { Table, TableBody, TableContainer, TableHead, TablePagination,Box } from '@mui/material';
-import styled from 'styled-components';
 
 const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows , ...props}) => {
-    console.log(props)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     return (
