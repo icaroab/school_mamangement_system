@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-// import { IconButton, Box, Menu, MenuItem, ListItemIcon, Tooltip } from '@mui/material';
-import { Table, TableBody, TableContainer, FormControlLabel, Checkbox, TableHead, Button, TablePagination, Box, TextField, Typography, Grid } from '@mui/material';
+import {  Container, FormControlLabel, Checkbox, Button, Paper, Box, TextField, Typography, Grid } from '@mui/material';
 import useQuestion from '../hook/useQuestion';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -34,7 +34,7 @@ const QuestionDetail = () => {
         }
     }
     const handleSubmit = () => {
-        const questionLength =questions.result.length
+        const questionLength = questions.result.length
         let answerTemplate = []
         new Array(questionLength).fill('').forEach((_, qId) => {
             new Array(4).fill('').forEach((_, id) => {
@@ -54,60 +54,66 @@ const QuestionDetail = () => {
         getQuestions(currentUser._id, id)
     }, [currentUser._id])
     return (<Box component="div" sx={styles.boxField}>
+        {/* <StyledPaper elevation={1}> */}
+
         <Box mb={2}>
             <Typography variant="h6" >{questions[0]?.titleId.sclassName}</Typography>
         </Box>
         <Grid container spacing={2}>
             {questions.result?.length > 0 && questions.result.map((question, qId) => (
-                <React.Fragment key={qId}>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            label="Question"
-                            variant="outlined"
-                            value={question.question}
-                            sx={styles.inputField}
-                            disabled
-                            // outlined={currentRole == 'Admin'}
-                            required
-                        />
-                    </Grid>
-                    <Grid item xs={12} style={{ marginBottom: '20px' }}>
-                        {
-                            question.answer?.length > 0 && question.answer.map((item, id) => {
-                                return <div key={id} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <TextField
-                                        fullWidth
-                                        value={item.desc}
-                                        sx={styles.inputField}
-                                        disabled
-                                        InputProps={{
-                                            style: { color: '#3f3030', backgroundColor: questions.submitted ? (item.isTrue == item.isChecked) ? '#c0ddc0' : '#ebcdcd' : '#f5f5f5' }
-                                        }}
-                                        required
-                                    />
-                                    {
-                                        (currentRole === "Admin" ? <FormControlLabel
-                                            control={<Checkbox
-                                                {...label}
-                                                disabled={currentRole == 'Admin'}
-                                                onChange={handleCheck(qId, id)}
-                                                sx={{ marginLeft: '10px' }}
-                                                checked={item.isTrue}
-                                            />}></FormControlLabel> : !questions.submitted ? <FormControlLabel
+                <StyledPaper>
+                    <Container key={qId} >
+                        <Grid item xs={12} >
+                            <TextField
+                                fullWidth
+                                label="Question"
+                                variant="outlined"
+                                value={question.question}
+                                sx={styles.inputField}
+                                disabled
+                                // outlined={currentRole == 'Admin'}
+                                required
+                            />
+                        </Grid>
+                        <Grid item xs={12} style={{ marginBottom: '20px' }}>
+                            {
+                                question.answer?.length > 0 && question.answer.map((item, id) => {
+                                    return <Grid key={id} sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                                        {
+                                            (currentRole === "Admin" ? <FormControlLabel
                                                 control={<Checkbox
                                                     {...label}
                                                     disabled={currentRole == 'Admin'}
                                                     onChange={handleCheck(qId, id)}
                                                     sx={{ marginLeft: '10px' }}
-                                                />}></FormControlLabel> : '')
-                                    }
-                                </div>
-                            })
-                        }
-                    </Grid>
+                                                    checked={item.isTrue}
+                                                />}></FormControlLabel> : !questions.submitted ? <FormControlLabel
+                                                    control={<Checkbox
+                                                        {...label}
+                                                        disabled={currentRole == 'Admin'}
+                                                        onChange={handleCheck(qId, id)}
+                                                        sx={{ marginLeft: '10px' }}
+                                                    />}></FormControlLabel> : '')
+                                        }
+                                        <TextField
+                                            fullWidth
+                                            value={item.desc}
+                                            sx={styles.inputField}
+                                            disabled
+                                            InputProps={{
+                                                style: { color: '#3f3030', backgroundColor: questions.submitted ? (item.isTrue == item.isChecked) ? '#c0ddc0' : '#ebcdcd' : '#f5f5f5' }
+                                            }}
+                                            required
+                                        />
 
-                </React.Fragment>
+                                    </Grid>
+                                })
+                            }
+                        </Grid>
+
+                    </Container>
+
+                </StyledPaper>
             ))}
         </Grid>
         <Grid item xs={12} display="flex" justifyContent="flex-end" container >
@@ -124,12 +130,12 @@ const QuestionDetail = () => {
                 </Box>
             }
         </Grid>
-
+        {/* </StyledPaper> */}
     </Box>)
 }
 export default QuestionDetail
 const styles = {
-    inputField: {
+    inputFieldOutlined: {
         '& .MuiInputLabel-root': {
             color: '#3f3030',
         },
@@ -138,6 +144,14 @@ const styles = {
         },
         marginTop: '10px'
     },
+    inputField: {
+        '& .MuiInputLabel-root': {
+            color: '#3f3030',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            border: 'none'
+        },
+    },
     boxField: {
         paddingRight: '20px',
         paddingLeft: '20px',
@@ -145,3 +159,9 @@ const styles = {
         paddingBottom: '40px'
     }
 };
+
+const StyledPaper = styled(Paper)`
+  padding: 20px;
+  margin: 20px;
+  width: 100%;
+`;

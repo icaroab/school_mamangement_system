@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IconButton, Box, Menu, MenuItem, ListItemIcon, Tooltip } from '@mui/material';
+import { IconButton, Box, Menu, MenuItem, ListItemIcon, Tooltip, Container } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -16,17 +16,8 @@ import Popup from '../../components/Popup';
 
 const QuestionList = () => {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
   const { currentUser } = useSelector(state => state.user)
   const { titles, isLoading } = useQuestion()
-  const adminID = currentUser._id
-
-  const [showPopup, setShowPopup] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const sclassColumns = [
-    { id: 'name', label: 'Question Title', minWidth: 170 },
-  ]
 
   const questionRows = titles && titles.length > 0 && titles.map((sclass) => {
     return {
@@ -67,21 +58,9 @@ const QuestionList = () => {
     };
     return (
       <>
+      <Container maxWidth="xl">
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-          {/* <Tooltip title="Add Students & Subjects">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-            >
-              <h5>Add</h5>
-              <SpeedDialIcon />
-            </IconButton>
-          </Tooltip> */}
-        </Box>
+        
         <Menu
           anchorEl={anchorEl}
           id="account-menu"
@@ -104,6 +83,8 @@ const QuestionList = () => {
             </MenuItem>
           ))}
         </Menu>
+        </Box>
+        </Container>
       </>
     );
   }
@@ -167,7 +148,5 @@ const styles = {
 
 const ButtonContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
 `;

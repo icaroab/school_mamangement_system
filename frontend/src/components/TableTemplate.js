@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { StyledTableCell, StyledTableRow } from './styles';
 import { Table, TableBody, TableContainer, TableHead, TablePagination,Box } from '@mui/material';
+import styled from 'styled-components';
 
-const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
+const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows , ...props}) => {
+    console.log(props)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     return (
@@ -23,7 +25,7 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                                 return (
                                     <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                         <StyledTableCell>{row.name}</StyledTableCell>
-                                        <StyledTableCell align="center">
+                                        <StyledTableCell sx={styles.ButtonContainer} >
                                             <ButtonHaver row={row} />
                                         </StyledTableCell>
                                     </StyledTableRow>
@@ -49,3 +51,12 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
 }
 
 export default TableTemplate
+
+
+const styles = {
+   
+    ButtonContainer: {
+       display:'flex',
+       justifyContent:'end'
+    }
+};

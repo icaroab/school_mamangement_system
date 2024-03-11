@@ -9,9 +9,6 @@ const StudentProfile = () => {
   if (response) { console.log(response) }
   else if (error) { console.log(error) }
 
-  const sclassName = currentUser.sclassName
-  const studentSchool = currentUser.school
-
   return (
     <>
       <Container maxWidth="md">
@@ -38,26 +35,12 @@ const StudentProfile = () => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="center">
-                <Typography variant="subtitle1" component="p" textAlign="center">
-                  Class: {sclassName.sclassName}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="center">
-                <Typography variant="subtitle1" component="p" textAlign="center">
-                  School: {studentSchool.schoolName}
-                </Typography>
-              </Box>
-            </Grid>
           </Grid>
         </StyledPaper>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
-              Personal Information
+              Personal Information (Template)
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
