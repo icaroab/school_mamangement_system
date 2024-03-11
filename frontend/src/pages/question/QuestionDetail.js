@@ -54,13 +54,13 @@ const QuestionDetail = () => {
         getQuestions(currentUser._id, id)
     }, [currentUser._id])
     return (<Box component="div" sx={styles.boxField}>
-        <Box mb={2}>{console.log(questions)}
+        <Box mb={2}>
             <Typography variant="h6" >{questions[0]?.titleId.sclassName}</Typography>
         </Box>
         <Grid container spacing={2}>
             {questions.result?.length > 0 && questions.result.map((question, qId) => (
                 <React.Fragment key={qId}>
-                    <Grid item xs={12}>{console.log(question)}
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             label="Question"

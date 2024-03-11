@@ -29,19 +29,11 @@ const useQuestion =(questionId)=>{
         setLoading(false)
     }
     const getAnswer = async(userId, questionId)=>{
-        // setLoading(true)
-        // const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/question/submit/${userId}/${questionId}`)
-        // console.log(result.data)
-        // setSubmittedAnswer(result.data)
-        // setLoading(false)
     }
     useEffect(()=>{
         getQuestionTitles()
     },[])
     useEffect(()=>{
-        // if(questionId!==undefined){
-        //     getQuestions(userId,questionId)
-        // }
     },[questionId])
     const createQuestion = (payload)=>{
 

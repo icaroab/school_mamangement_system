@@ -4,7 +4,6 @@ const Subject = require('../models/subjectSchema.js');
 const Answer = require('../models/answerSchema.js');
 const Question = require('../models/questionSchema.js');
 const studentRegister = async (req, res) => {
-    console.log(req.body)
     try {
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt);
@@ -36,14 +35,11 @@ const studentRegister = async (req, res) => {
 };
 
 const studentLogIn = async (req, res) => {
-    console.log(req.body)
     try {
         let student = await Student.findOne({ rollNum: req.body.rollNum, name: req.body.studentName });
         if (student) {
             const validated = await bcrypt.compare(req.body.password, student.password);
             if (validated) {
-                // student = await student.populate("school", "schoolName")
-                // student = await student.populate("sclassName", "sclassName")
                 student.password = undefined;
                 student.examResult = undefined;
                 student.attendance = undefined;
@@ -60,11 +56,9 @@ const studentLogIn = async (req, res) => {
 };
 
 const getStudents = async (req, res) => {
-    console.log('ssssss')
     try {
         let students = await Student.find().select('name')
         if (students.length > 0) {
-            console.log(students)
             res.send(students)
         } else {
             res.send({ message: "No students found" });
@@ -74,7 +68,6 @@ const getStudents = async (req, res) => {
     }
 };
 const getTestsByStudent = async(req, res)=>{
-    console.log(req.params)
     const {sId} = req.params
     try{
         const result = await Answer.find({userId: sId}).populate({
@@ -84,11 +77,6 @@ const getTestsByStudent = async(req, res)=>{
             path:'sectionId',
             select:'sclassName'
         })
-        console.log('-----------------------------------------')
-        console.log('result.......',result)
-        // console.log('question........',(await Question.find({ titleId: result[0].sectionId._id }).exec())[0])
-        // console.log('answer........',result[0].answer)
-        
         let promises = result.map(async(item,index)=>{
             return {
                 _id:item._id,
@@ -100,7 +88,6 @@ const getTestsByStudent = async(req, res)=>{
             }
         })
         const modifiedResult = await Promise.all(promises)
-        console.log('modifiedResult........',modifiedResult[0].answer[0])
         res.json(modifiedResult)
     }catch(err){
         res.status(500).json(err);
@@ -108,8 +95,6 @@ const getTestsByStudent = async(req, res)=>{
     }
 }
 const comparedResult = (answer, questions) => {
-    console.log('sssssssssxxxxxxxxxxxxx', answer, questions)
-    console.log('xxxxxxxxxxx', questions[0].answer)
     const result = questions.map((question, qIndex) => ({
         question: question.question,
         questionId: question._id,
@@ -123,13 +108,8 @@ const comparedResult = (answer, questions) => {
     return result
 }
 const getStudentDetail = async (req, res) => {
-    console.log('sssssssssssssssssssssssssssssssssss')
     try {
         let student = await Student.findById(req.params.id)
-            // .populate("school", "schoolName")
-            // .populate("sclassName", "sclassName")
-            // .populate("examResult.subName", "subName")
-            // .populate("attendance.subName", "subName sessions");
         if (student) {
             student.password = undefined;
             res.send(student);

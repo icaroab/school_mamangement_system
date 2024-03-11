@@ -20,7 +20,6 @@ const StudentList = () => {
     const { currentUser } = useSelector(state => state.user)
     const { students, isLoading } = useStudent()
     const adminID = currentUser._id
-    console.log(pathname)
     const sclassColumns = [
         { id: 'name', label: 'Question Title', minWidth: 170 },
     ]
@@ -111,7 +110,6 @@ const StudentList = () => {
                         Array.isArray(students) && students.length > 0 &&
                         <TableTemplate columns={students} rows={studentRows} buttonHaver={SclassButtonHaver} />
                     }
-                    {console.log(studentRows)}
                 </>
             }
 

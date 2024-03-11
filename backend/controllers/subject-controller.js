@@ -14,15 +14,12 @@ const subjectCreate = async (req, res) => {
     }
 };
 const getQuestions = async (req, res) => {
-    console.log(req.params)
     const { userId, qId } = req.params
     let sampleAnswer = []
     try {
         const submittedAnswer = await Answer.find({ userId: userId, sectionId: qId })
-        console.log(submittedAnswer)
         if (submittedAnswer.length > 0) {
             sampleAnswer = await Question.find({ titleId: qId }).exec()
-            console.log(comparedResult(submittedAnswer[0].answer, sampleAnswer[0].questions))
             res.json({
                 submitted: true,
                 submitter: await Student.findById(userId).select('name'),
@@ -30,7 +27,6 @@ const getQuestions = async (req, res) => {
                 result: comparedResult(submittedAnswer[0].answer, sampleAnswer[0].questions)
             })
         } else {
-            console.log((await Question.find({ titleId: qId }).exec())[0].questions)
             res.json({
                 submitted: false,
                 submitter: null,
@@ -51,9 +47,6 @@ const getQuestionTitle = async (req, res) => {
     }
 }
 const postAnswer = async (req, res) => {
-    console.log('ssss')
-    console.log(req.params)
-    console.log(req.body)
     const { userId, qId } = req.params
     const data = {
         userId,
@@ -68,23 +61,6 @@ const postAnswer = async (req, res) => {
     }
 }
 const getAnswer = async (req, res) => {
-    // console.log(req.params)
-    // const {userId,qId} = req.params
-    // let sampleAnswer = []
-    // try{
-    //     const submittedAnswer = await Answer.find({userId:userId,sectionId:qId})
-    //     if (submittedAnswer.length>0){
-    //          sampleAnswer = await Question.find({titleId:qId}).exec() 
-    //     }
-    //     res.json({
-    //         submitted:true,
-    //         submitter:await Student.findById(userId).select('name'),
-    //         sectionId:qId,
-    //         result:comparedResult(submittedAnswer[0].answer,sampleAnswer[0].questions)
-    //     })
-    // }catch(err){
-    //     res.status(500).json(err)
-    // }
 }
 const comparedResult = (answer, questions) => {
     const result = questions.map((question, qIndex) => ({

@@ -34,9 +34,7 @@ const StudentSubjects = () => {
     }, [userDetails])
 
     useEffect(() => {
-        // if (subjectMarks === []) {
-        //     // dispatch(getSubjectList(currentUser.sclassName._id, "ClassSubjects"));
-        // }
+        
     }, [subjectMarks, dispatch, ]);
 
     const handleSectionChange = (event, newSection) => {

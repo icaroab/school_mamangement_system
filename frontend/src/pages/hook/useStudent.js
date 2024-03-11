@@ -7,9 +7,7 @@ const useStudent = (sId) => {
     const getStudents = async () => {
         setLoading(true)
         try {
-            console.log('sssssss')
             const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/students`)
-            console.log(result)
             if (result.data) {
                 setStudent(result.data)
             }
@@ -19,7 +17,6 @@ const useStudent = (sId) => {
         setLoading(false)
     }
     const getTestsByStudent = async (sId) => {
-        console.log('sdfsdf')
         setLoading(true)
         try {
             const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/students/${sId}/tests`)

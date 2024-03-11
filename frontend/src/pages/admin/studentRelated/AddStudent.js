@@ -48,7 +48,6 @@ const AddStudent = ({ situation }) => {
     }
 
     useEffect(() => {
-        console.log(status)
         if (status === 'added') {
             setMessage('Student Added Successfully')
             dispatch(underControl())

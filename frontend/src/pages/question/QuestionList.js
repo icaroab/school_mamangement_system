@@ -21,10 +21,6 @@ const QuestionList = () => {
   const { titles, isLoading } = useQuestion()
   const adminID = currentUser._id
 
-  //   if (error) {
-  //     console.log(error)
-  //   }
-
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
