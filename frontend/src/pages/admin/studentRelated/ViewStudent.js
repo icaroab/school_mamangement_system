@@ -22,6 +22,7 @@ import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 import Popup from '../../../components/Popup';
 import TableTemplate from '../../../components/TableTemplate';
 import useStudent from '../../hook/useStudent';
+import DoneIcon from '@mui/icons-material/Done';
 const bull = (
     <Box
         component="span"
@@ -61,34 +62,43 @@ const ViewStudent = () => {
                                     <Typography variant="h5" component="div">
                                         {item.section}
                                     </Typography>
-                                    {/* <Typography variant="h5" component="div">
-                                        Roll Number: 
-                                    </Typography> */}
                                     {
                                         item.answer.map((ans, ansId) => {
                                             return <div key={ansId}>
                                                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                                                     {ans.question}
                                                 </Typography>
-                                                {
-                                                    ans.answer.map((answerItem, index) => {
-                                                        return <GradeIcon key={index} sx={answerItem.isTrue===answerItem.isChecked?styles.starGold:styles.starGrey} />
-                                                    })
-                                                }
+                                                <Box sx={{ display: 'flex' }}>
+                                                <Typography>Q:</Typography>
+                                                    {
+                                                        ans.answer.map((answerItem, index) => {
+                                                            return <GradeIcon key={index} sx={answerItem.isTrue ? styles.starGold : styles.starGrey} />
+                                                        })
+                                                    }
+                                                </Box>
+                                                <Box sx={{ display: 'flex' }}>
+                                                <Typography>A:</Typography>
+
+                                                    {
+                                                        ans.answer.map((answerItem, index) => {
+                                                            return <DoneIcon key={index} sx={answerItem.isTrue && answerItem.isChecked ? styles.starGold :!answerItem.isTrue&&answerItem.isChecked?styles.starRed:styles.starGrey} />
+                                                        })
+                                                    }
+                                                </Box>
 
                                             </div>
                                         })
                                     }
                                 </CardContent>
                                 <CardActions>
-                                    <Link to={`/questions/${item.userId}/${item.sectionId}`}><Button size="small">Learn More</Button></Link>
-                                    
+                                    <Link to={`/questions/${item.userId}/${item.sectionId}`}><Button size="small">Details</Button></Link>
+
                                 </CardActions>
                             </Card>
                         })
                     }
 
-                </Container></Container>:<Typography>No data</Typography>
+                </Container></Container> : <Typography>No data</Typography>
         }
 
         </>
@@ -123,13 +133,16 @@ const styles = {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        padding:'20px'
+        padding: '20px'
         // justifyContent:'space-between'
     },
     starGold: {
         color: '#FFDF00'
     },
     starGrey: {
-        color: '#a7a0a0'
+        color: '#d9d9d9'
+    },
+    starRed: {
+        color: '#f75252'
     }
 }
