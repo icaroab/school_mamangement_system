@@ -5,7 +5,6 @@ const Section = require('../models/sectionSchema.js');
 const Answer = require('../models/answerSchema.js');
 
 const subjectCreate = async (req, res) => {
-    console.log('subjectcreate')
     try {
         const newQuestions = await Question.create(req.body);
         res.status(201).send(newQuestions)
@@ -14,13 +13,10 @@ const subjectCreate = async (req, res) => {
     }
 };
 const getQuestions = async (req, res) => {
-    console.log('getquestions')
     const { userId, qId } = req.params
-    console.log('getQuestions',userId, qId)
     let sampleAnswer = []
     try {
         const submittedAnswer = await Answer.find({ userId: userId, sectionId: qId })
-        console.log(submittedAnswer)
         if (submittedAnswer.length > 0) {
             sampleAnswer = await Question.find({ titleId: qId }).exec()
             res.json({
@@ -42,7 +38,6 @@ const getQuestions = async (req, res) => {
     }
 }
 const getQuestionTitle = async (req, res) => {
-    console.log('getQuestionsTItle',)
     try {
         let questionTitle = await Section.find()
         res.send(questionTitle)

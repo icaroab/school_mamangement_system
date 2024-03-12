@@ -18,7 +18,8 @@ const AdminRegisterPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { status, currentUser, response, error, currentRole } = useSelector(state => state.user);;
+    const { status, currentUser, response, error, currentRole } = useSelector(state => state.user);
+    const user = useSelector(state => state.user)
 
     const [toggle, setToggle] = useState(false)
     const [loader, setLoader] = useState(false)
@@ -71,7 +72,7 @@ const AdminRegisterPage = () => {
     }, [status, currentUser, currentRole, navigate, error, response]);
 
     return (
-        <ThemeProvider theme={defaultTheme}>
+        <ThemeProvider theme={defaultTheme}>{console.log(user)}
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -88,10 +89,9 @@ const AdminRegisterPage = () => {
                             Admin Register
                         </Typography>
                         <Typography variant="h7">
-                            Create your own school by registering as an admin.
+                            Create your own account by registering as an admin.
                             <br />
-                            You will be able to add students and faculty and
-                            manage the system.
+                            You will be able to add students and tract their assessments
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
                             <TextField

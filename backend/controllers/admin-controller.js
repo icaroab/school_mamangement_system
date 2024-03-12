@@ -1,6 +1,7 @@
 const Admin = require('../models/adminSchema.js');
 
 const adminRegister = async (req, res) => {
+    console.log('adminreg',{...req.body})
     try {
         const admin = new Admin({
             ...req.body
@@ -12,10 +13,12 @@ const adminRegister = async (req, res) => {
         }
         else {
             let result = await admin.save();
+            console.log(result)
             result.password = undefined;
             res.send(result);
         }
     } catch (err) {
+        console.log(err)
         res.status(500).json(err);
     }
 };

@@ -17,7 +17,6 @@ export const getAllsections = (id, user) => async (dispatch) => {
 
     try {
         const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/titles/${user}/${id}`);
-        console.log(result)
             dispatch(getSuccess(result.data));
     } catch (error) {
         dispatch(getError(error));

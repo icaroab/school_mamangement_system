@@ -31,7 +31,7 @@ const useQuestion =(questionId)=>{
     const getAnswer = async(userId, questionId)=>{
     }
     useEffect(()=>{
-        getQuestionTitles()
+        // getQuestionTitles()
     },[])
     useEffect(()=>{
     },[questionId])

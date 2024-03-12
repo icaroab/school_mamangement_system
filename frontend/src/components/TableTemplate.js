@@ -38,10 +38,6 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows , ...props}) =>
                                             {
                                                 !row.isAnswered?<ButtonHaver row={row} />:''
                                             }
-                                            {
-                                                console.log(row)
-                                            }
-                                            
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 );

@@ -100,7 +100,9 @@ const QuestionDetail = () => {
                                         sx={styles.inputField}
                                         disabled
                                         InputProps={{
-                                            style: { color: '#3f3030', backgroundColor: questions.submitted ? (item.isTrue == item.isChecked) ? '#c0ddc0' : '#ebcdcd' : '#f5f5f5' }
+                                            style: {
+                                                color: '#3f3030', backgroundColor: item.isTrue && item.isChecked ? '#c0ddc0' : !item.isTrue && item.isChecked ? '#ebcdcd' : '#f5f5f5'
+                                            }
                                         }}
                                         required
                                     />

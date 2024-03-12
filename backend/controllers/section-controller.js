@@ -3,7 +3,6 @@ const Student = require('../models/studentSchema.js');
 
 const Answer = require('../models/answerSchema.js');
 const sectionCreate = async (req, res) => {
-    console.log('section create')
     try {
         const section = new Section({
             name: req.body.sectionName,
@@ -26,13 +25,10 @@ const sectionCreate = async (req, res) => {
     }
 };
 const getQuestionTitle = async (req, res) => {
-    console.log('getQuestionsTItle',)
-    console.log(req.params)
     const userId = req.params.id
     const role = req.params.user
     try {
         if (role === "Student") {
-            console.log('sdfsd')
             let answers = await Answer.find({
                 userId
             })
@@ -66,7 +62,6 @@ const getQuestionTitle = async (req, res) => {
     }
 }
 const sectionList = async (req, res) => {
-    console.log('sectionList')
     try {
         let sectiones = await Section.find({ school: req.params.id })
         if (sectiones.length > 0) {

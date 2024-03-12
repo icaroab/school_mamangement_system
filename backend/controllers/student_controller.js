@@ -66,9 +66,7 @@ const getStudents = async (req, res) => {
     }
 };
 const getTestsByStudent = async(req, res)=>{
-    console.log('getTestsByStudent')
     const {sId} = req.params
-    console.log(req.params)
     try{
         const result = await Answer.find({userId: sId}).populate({
             path:'userId',
@@ -77,7 +75,6 @@ const getTestsByStudent = async(req, res)=>{
             path:'sectionId',
             select:'name _id'
         })
-        console.log(result)
         let promises = result.map(async(item,index)=>{
             return {
                 _id:item._id,
@@ -91,10 +88,8 @@ const getTestsByStudent = async(req, res)=>{
             }
         })
         const modifiedResult = await Promise.all(promises)
-        console.log(modifiedResult)
         res.json(modifiedResult)
     }catch(err){
-        console.log('drr    xvxcv',err)
         res.status(500).json(err);
 
     }
