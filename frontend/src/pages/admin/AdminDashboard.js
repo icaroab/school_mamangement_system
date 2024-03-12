@@ -24,17 +24,8 @@ import ViewStudent from './studentRelated/ViewStudent';
 import ShowNotices from './noticeRelated/ShowNotices';
 
 import SubjectForm from './subjectRelated/SubjectForm';
-import ViewSubject from './subjectRelated/ViewSubject';
-
-import AddTeacher from './teacherRelated/AddTeacher';
-import ChooseClass from './teacherRelated/ChooseClass';
-import ChooseSubject from './teacherRelated/ChooseSubject';
-import ShowTeachers from './teacherRelated/ShowTeachers';
-import TeacherDetails from './teacherRelated/TeacherDetails';
 
 import AddClass from './classRelated/AddClass';
-import ClassDetails from './classRelated/ClassDetails';
-import ShowClasses from './classRelated/ShowClasses';
 import AccountMenu from '../../components/AccountMenu';
 import QuestionList from '../question/QuestionList';
 import QuestionDetail from '../question/QuestionDetail';
