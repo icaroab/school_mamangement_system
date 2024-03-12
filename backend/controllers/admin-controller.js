@@ -1,7 +1,6 @@
 const Admin = require('../models/adminSchema.js');
 
 const adminRegister = async (req, res) => {
-    console.log('adminreg',{...req.body})
     try {
         const admin = new Admin({
             ...req.body

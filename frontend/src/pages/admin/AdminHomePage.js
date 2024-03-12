@@ -21,7 +21,7 @@ const AdminHomePage = () => {
     useEffect(() => {
         dispatch(getAllStudents(adminID));
         dispatch(getAllsections(adminID, currentUser.role));
-    }, [adminID, dispatch]);
+    }, [adminID, dispatch, currentUser]);
 
     const numberOfStudents = studentsList && studentsList.length;
     const numberOfSections = sectionesList && sectionesList.length;

@@ -1,42 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { Container, Grid, Paper, Typography } from '@mui/material'
+import React, { useEffect } from 'react'
+import { Container, Grid, Paper } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
-import { calculateOverallAttendancePercentage } from '../../components/attendanceCalculator';
-import CustomPieChart from '../../components/CustomPieChart';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import styled from 'styled-components';
 import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
 import { getAllsections } from '../../redux/sectionRelated/sectionHandle';
-import DoneIcon from '@mui/icons-material/Done';
 const StudentHomePage = () => {
     const dispatch = useDispatch();
 
-    const { userDetails, currentUser, loading, response } = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state) => state.user);
     const { sectionesList } = useSelector((state) => state.section);
-
-    const [subjectAttendance, setSubjectAttendance] = useState([]);
     useEffect(() => {
         dispatch(getUserDetails(currentUser._id, "Student"));
     }, [dispatch, currentUser._id]);
 
-    const numberOfSubjects = sectionesList && sectionesList.length;
-
+    const numberOfAssessments = sectionesList && sectionesList.length;
+    const numberOfMyAssessments = sectionesList && sectionesList.filter(section => section.isAnswered).length;
     useEffect(() => {
         dispatch(getAllsections(currentUser._id, currentUser.role));
-        if (userDetails) {
-            setSubjectAttendance(userDetails.attendance || []);
-        }
-    }, [userDetails])
+        
+    }, [dispatch, currentUser])
 
-    const overallAttendancePercentage = calculateOverallAttendancePercentage(subjectAttendance);
-    const overallAbsentPercentage = 100 - overallAttendancePercentage;
 
-    const chartData = [
-        { name: 'Present', value: overallAttendancePercentage },
-        { name: 'Absent', value: overallAbsentPercentage }
-    ];
     return (
         <>
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -45,46 +32,23 @@ const StudentHomePage = () => {
                         <StyledPaper>
                             <img src={Subject} alt="Subjects" />
                             <Title>
-                                Total Subjects
+                                Total Assessments
                             </Title>
-                            <Data start={0} end={numberOfSubjects} duration={2.5} />
+                            <Data start={0} end={numberOfAssessments} duration={1} />
                         </StyledPaper>
                     </Grid>
                     <Grid item xs={12} md={3} lg={3}>
                         <StyledPaper>
                             <img src={Assignment} alt="Assignments" />
                             <Title>
-                                Total Assignments
+                                My Assignments
                             </Title>
-                            <Data start={0} end={15} duration={4} />
+                            <Data start={0} end={numberOfMyAssessments} duration={1} />
                         </StyledPaper>
                     </Grid>
                     <Grid item xs={12} md={4} lg={3}>
                         <ChartContainer>
-                            {
-                                response ?
-                                    <Typography variant="h6">No Attendance Found</Typography>
-                                    :
-                                    <>
-                                        {loading
-                                            ? (
-                                                <Typography variant="h6">Loading...</Typography>
-                                            )
-                                            :
-                                            <>
-                                                {
-                                                    subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0 ? (
-                                                        <>
-                                                            <CustomPieChart data={chartData} />
-                                                        </>
-                                                    )
-                                                        :
-                                                        <Typography variant="h6">No Attendance Found</Typography>
-                                                }
-                                            </>
-                                        }
-                                    </>
-                            }
+
                         </ChartContainer>
                     </Grid>
                     <Grid item xs={12}>

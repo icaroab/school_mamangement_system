@@ -12,26 +12,6 @@ useEffect(() => {
     };
 }, []);
 
-{/* {
-          isMobile ?
-            <ActionMenu row={row} actions={actions} />
-            :
-            <StyledSpeedDial
-              ariaLabel="SpeedDial playground example"
-              icon={<SpeedDialIcon />}
-              direction="right"
-            >
-              {actions.map((action) => (
-                <SpeedDialAction
-                  key={action.name}
-                  icon={action.icon}
-                  tooltipTitle={action.name}
-                  onClick={action.action}
-                />
-              ))}
-            </StyledSpeedDial>
-        } */}
-
 const StyledSpeedDial = styled(SpeedDial)`
   .MuiSpeedDial-fab {
     background-color: #240439;

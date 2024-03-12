@@ -1,29 +1,19 @@
-import { useEffect, useState } from 'react';
-import { IconButton, Box, Menu, MenuItem, ListItemIcon, Tooltip } from '@mui/material';
+import {  useState } from 'react';
+import { IconButton,  Menu, MenuItem, ListItemIcon } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { BlueButton, GreenButton } from '../../components/buttonStyles';
+import { useNavigate } from 'react-router-dom';
+import { BlueButton } from '../../components/buttonStyles';
 import TableTemplate from '../../components/TableTemplate';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import AddCardIcon from '@mui/icons-material/AddCard';
 import styled from 'styled-components';
 import useStudent from '../hook/useStudent';
-import SpeedDialTemplate from '../../components/SpeedDialTemplate';
-import Popup from '../../components/Popup';
+
 
 const StudentList = () => {
     const navigate = useNavigate()
-    const { pathname } = useLocation()
-    const { currentUser } = useSelector(state => state.user)
     const { students, isLoading } = useStudent()
-    const adminID = currentUser._id
-    const sectionColumns = [
-        { id: 'name', label: 'Question Title', minWidth: 170 },
-    ]
-
     const studentRows = students && students.length > 0 && students.map((student) => {
         return {
             name: student.name,
@@ -55,9 +45,9 @@ const StudentList = () => {
 
         const open = Boolean(anchorEl);
 
-        const handleClick = (event) => {
-            setAnchorEl(event.currentTarget);
-        };
+        // const handleClick = (event) => {
+        //     setAnchorEl(event.currentTarget);
+        // };
         const handleClose = () => {
             setAnchorEl(null);
         };
@@ -88,17 +78,6 @@ const StudentList = () => {
             </>
         );
     }
-
-    const actions = [
-        {
-            icon: <AddCardIcon color="primary" />, name: 'Add New Class',
-            action: () => navigate("/Admin/addclass")
-        },
-        {
-            icon: <DeleteIcon color="error" />, name: 'Delete All Classes',
-            //   action: () => deleteHandler(adminID, "sections")
-        },
-    ];
 
     return (
         <>

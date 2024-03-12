@@ -21,8 +21,6 @@ import AddStudent from './studentRelated/AddStudent';
 import ShowStudents from './studentRelated/ShowStudents';
 import ViewStudent from './studentRelated/ViewStudent';
 
-import ShowNotices from './noticeRelated/ShowNotices';
-
 import SubjectForm from './subjectRelated/SubjectForm';
 
 import AddClass from './classRelated/AddClass';

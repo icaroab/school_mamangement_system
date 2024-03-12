@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, FormControlLabel, Checkbox, Button, Paper, Box, TextField, Typography, Grid } from '@mui/material';
+import { FormControlLabel, Checkbox, Button, Paper, Box, TextField, Typography, Grid } from '@mui/material';
 import useQuestion from '../hook/useQuestion';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ const QuestionDetail = () => {
         let isDouble = true
         let currentAnswer = [...myAnswer]
         currentAnswer.forEach((element, index) => {
-            if (element.qId == qId && element.id == id) {
+            if (element.qId === qId && element.id === id) {
                 currentAnswer[index] = { ...element, isChecked: event.target.checked }
                 isDouble = false
             }
@@ -38,7 +38,7 @@ const QuestionDetail = () => {
         let answerTemplate = []
         new Array(questionLength).fill('').forEach((_, qId) => {
             new Array(4).fill('').forEach((_, id) => {
-                let trueAnswer = myAnswer.filter(item => item.id == id && item.qId == qId)[0]
+                let trueAnswer = myAnswer.filter(item => item.id === id && item.qId === qId)[0]
                 answerTemplate.push({
                     qId,
                     id,
@@ -52,10 +52,8 @@ const QuestionDetail = () => {
 
     useEffect(() => {
         getQuestions(userId, qId)
-    }, [userId])
+    }, [userId,qId,getQuestions])
     return (<Box component="div" sx={styles.boxField}>
-        {/* <StyledPaper elevation={1}> */}
-
         <Box mb={2}>
             <Typography variant="h6" >{questions[0]?.titleId.sectionName}</Typography>
         </Box>
@@ -82,14 +80,14 @@ const QuestionDetail = () => {
                                         (currentRole === "Admin" ? <FormControlLabel
                                             control={<Checkbox
                                                 {...label}
-                                                disabled={currentRole == 'Admin'}
+                                                disabled={currentRole === 'Admin'}
                                                 onChange={handleCheck(qId, id)}
                                                 sx={{ marginLeft: '10px' }}
                                                 checked={item.isTrue}
                                             />}></FormControlLabel> : !questions.submitted ? <FormControlLabel
                                                 control={<Checkbox
                                                     {...label}
-                                                    disabled={currentRole == 'Admin'}
+                                                    disabled={currentRole === 'Admin'}
                                                     onChange={handleCheck(qId, id)}
                                                     sx={{ marginLeft: '10px' }}
                                                 />}></FormControlLabel> : '')

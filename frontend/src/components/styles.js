@@ -7,7 +7,7 @@ import {
     AppBar as MuiAppBar,
 } from "@mui/material";
 
-const drawerWidth = 240
+const drawerWidth = 250
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

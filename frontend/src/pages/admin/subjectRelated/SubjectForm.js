@@ -36,16 +36,14 @@ const QuestionForm = () => {
     const params = useParams()
 
     const userState = useSelector(state => state.user);
-    const { status, currentUser, response, error } = userState;
+    const { status, response, error } = userState;
 
     const titleId = params.id
-    const adminID = currentUser._id
     const address = "Subject"
 
     const [showPopup, setShowPopup] = useState(false);
-    const [message, setMessage] = useState("");
+    // const [message, setMessage] = useState("");
     const [loader, setLoader] = useState(false)
-    const [checkError, setCheckError] = useState(false)
     const [checkErrorMessage, setCheckErrorMessage] = useState("")
     const handleQuestionNameChange = (index) => (event) => {
         const newQuestions = [...questions];
@@ -135,12 +133,12 @@ const QuestionForm = () => {
             setLoader(false)
         }
         else if (status === 'failed') {
-            setMessage(response)
+            // setMessage(response)
             setShowPopup(true)
             setLoader(false)
         }
         else if (status === 'error') {
-            setMessage("Network Error")
+            // setMessage("Network Error")
             setShowPopup(true)
             setLoader(false)
         }

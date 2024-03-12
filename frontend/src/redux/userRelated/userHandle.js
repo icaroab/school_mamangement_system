@@ -7,12 +7,10 @@ import {
     authError,
     authLogout,
     doneSuccess,
-    getDeleteSuccess,
     getRequest,
     getFailed,
     getError,
 } from './userSlice';
-import { useNavigate } from 'react-router-dom';
 
 export const loginUser = (fields, role) => async (dispatch) => {
     dispatch(authRequest());

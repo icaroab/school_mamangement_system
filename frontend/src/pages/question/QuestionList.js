@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
-import { IconButton, Box, Menu, MenuItem, ListItemIcon, Tooltip, Container } from '@mui/material';
+import {  Box, Menu, MenuItem, ListItemIcon, Container } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { BlueButton, GreenButton } from '../../components/buttonStyles';
+import { useNavigate } from 'react-router-dom';
+import { BlueButton } from '../../components/buttonStyles';
 import TableTemplate from '../../components/TableTemplate';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import styled from 'styled-components';
-import useQuestion from '../hook/useQuestion';
 import SpeedDialTemplate from '../../components/SpeedDialTemplate';
-import Popup from '../../components/Popup';
 import { getAllsections } from '../../redux/sectionRelated/sectionHandle';
 
 const QuestionList = () => {
@@ -33,7 +30,7 @@ const QuestionList = () => {
   useEffect(() => {
     dispatch(getAllsections(currentUser._id, currentUser.role));
 
-  }, [dispatch])
+  }, [dispatch, currentUser])
   const SectionButtonHaver = ({ row }) => {
     const actions = [
       { icon: <PostAddIcon />, name: 'Add Subjects', action: () => navigate("/Admin/addsubject/" + row.id) },
@@ -44,7 +41,7 @@ const QuestionList = () => {
         <BlueButton variant="contained"
           onClick={() => navigate("/questions/" + currentUser._id+"/"+row.id)}>
           {
-            currentUser.role == "Admin" ? "View" : "Test"
+            currentUser.role === "Admin" ? "View" : "Test"
           }
         </BlueButton>
         <ActionMenu actions={actions} />
@@ -57,9 +54,9 @@ const QuestionList = () => {
 
     const open = Boolean(anchorEl);
 
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
+    // const handleClick = (event) => {
+    //   setAnchorEl(event.currentTarget);
+    // };
     const handleClose = () => {
       setAnchorEl(null);
     };
@@ -117,7 +114,7 @@ const QuestionList = () => {
             Array.isArray(titles) && titles.length > 0 &&
             <TableTemplate columns={titles} rows={questionRows} buttonHaver={SectionButtonHaver} />
           }
-          {currentUser.role == 'Admin' && <SpeedDialTemplate actions={actions} />}
+          {currentUser.role === 'Admin' && <SpeedDialTemplate actions={actions} />}
         </>
       }
 

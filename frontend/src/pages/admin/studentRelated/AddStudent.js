@@ -14,12 +14,10 @@ const AddStudent = ({ situation }) => {
 
     const userState = useSelector(state => state.user);
     const { status, currentUser, response, error } = userState;
-    const { sectionesList } = useSelector((state) => state.section);
 
     const [name, setName] = useState('');
     const [rollNum, setRollNum] = useState('');
     const [password, setPassword] = useState('')
-    const [className, setClassName] = useState('')
 
     const adminID = currentUser._id
     const role = "Student"
@@ -36,7 +34,7 @@ const AddStudent = ({ situation }) => {
 
     useEffect(() => {
         dispatch(getAllsections(adminID, currentUser.role));
-    }, [adminID, dispatch]);
+    }, [adminID, dispatch, currentUser]);
 
 
     const fields = { name, rollNum, password, adminID, role, attendance }

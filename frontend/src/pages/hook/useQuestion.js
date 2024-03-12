@@ -4,7 +4,6 @@ const useQuestion =(questionId)=>{
     const [questions, setQuestions] = useState([])
     const [titles, setTitles] = useState([])
     const [isLoading, setLoading] = useState(false)
-    const [submittedAnswer, setSubmittedAnswer] = useState({})
     const getQuestions = async(userId,questionId)=>{
         setLoading(true)
         const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/questions/${userId}/${questionId}`, {
@@ -25,7 +24,7 @@ const useQuestion =(questionId)=>{
     const submitAnswer = async(userId,questionId,res)=>{
         console.log(res)
         setLoading(true)
-        const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/question/submit/${userId}/${questionId}`,res)
+        await axios.post(`${process.env.REACT_APP_BASE_URL}/question/submit/${userId}/${questionId}`,res)
         setLoading(false)
     }
     const getAnswer = async(userId, questionId)=>{
@@ -45,6 +44,7 @@ const useQuestion =(questionId)=>{
         getQuestions,
         createQuestion,
         submitAnswer,
+        getQuestionTitles,
         getAnswer
     }
 }

@@ -1,47 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, getUserDetails, updateUser } from '../../../redux/userRelated/userHandle';
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getSubjectList } from '../../../redux/sectionRelated/sectionHandle';
-import { Box, Button, Collapse, IconButton, Table, Card, CardContent, CardActions, TableBody, TableHead, Typography, Tab, Paper, BottomNavigation, BottomNavigationAction, Container } from '@mui/material';
-import TabContext from '@mui/lab/TabContext';
+import { Box, Button, Card, CardContent, CardActions, Typography, Container } from '@mui/material';
 import GradeIcon from '@mui/icons-material/Grade';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { KeyboardArrowUp, KeyboardArrowDown, Delete as DeleteIcon } from '@mui/icons-material';
-import { removeStuff, updateStudentFields } from '../../../redux/studentRelated/studentHandle';
-import { calculateOverallAttendancePercentage, calculateSubjectAttendancePercentage, groupAttendanceBySubject } from '../../../components/attendanceCalculator';
-import CustomBarChart from '../../../components/CustomBarChart'
-import CustomPieChart from '../../../components/CustomPieChart'
-import { StyledTableCell, StyledTableRow } from '../../../components/styles';
 
-import InsertChartIcon from '@mui/icons-material/InsertChart';
-import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
-import TableChartIcon from '@mui/icons-material/TableChart';
-import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
-import Popup from '../../../components/Popup';
-import TableTemplate from '../../../components/TableTemplate';
 import useStudent from '../../hook/useStudent';
 import DoneIcon from '@mui/icons-material/Done';
-const bull = (
-    <Box
-        component="span"
-        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-        •
-    </Box>
-);
 const ViewStudent = () => {
-    const [showTab, setShowTab] = useState(false);
 
-    const navigate = useNavigate()
     const params = useParams()
     const dispatch = useDispatch()
-    const { userDetails, response, loading, error } = useSelector((state) => state.user);
+    const { userDetails} = useSelector((state) => state.user);
 
     const studentID = params.id
-    const address = "Student"
-    const { currentUser } = useSelector(state => state.user)
     const { myTests } = useStudent(studentID)
 
     useEffect(() => {
