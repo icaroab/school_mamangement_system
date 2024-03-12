@@ -1,6 +1,7 @@
 const Section = require('../models/sectionSchema.js');
 const Student = require('../models/studentSchema.js');
 
+const Answer = require('../models/answerSchema.js');
 const sectionCreate = async (req, res) => {
     console.log('section create')
     try {
@@ -26,9 +27,40 @@ const sectionCreate = async (req, res) => {
 };
 const getQuestionTitle = async (req, res) => {
     console.log('getQuestionsTItle',)
+    console.log(req.params)
+    const userId = req.params.id
+    const role = req.params.user
     try {
-        let questionTitle = await Section.find()
-        res.send(questionTitle)
+        if (role === "Student") {
+            console.log('sdfsd')
+            let answers = await Answer.find({
+                userId
+            })
+                .select('userId sectionId')
+                .populate({
+                    path: 'sectionId',
+                    select: 'name'
+                })
+            let sectionIds = answers.map((answer) => {
+                return answer.sectionId._id.toString()
+            })
+            let questionTitle = await Section.find()
+            let result = []
+             questionTitle.forEach((section, index) => {
+                result = [...result,{
+                    _id:section._id,
+                    name:section.name,
+                    isAnswered:sectionIds.includes(section._id.toString()),
+                    createdAt:section.createdAt,
+                    updatedAt:section.updatedAt
+                }]
+
+            })
+            res.send(result)
+        } else {
+            let questionTitle = await Section.find({})
+            res.send(questionTitle)
+        }
     } catch (err) {
         res.status(500).json(err)
     }
@@ -103,4 +135,4 @@ const deletesections = async (req, res) => {
 }
 
 
-module.exports = { sectionCreate,getQuestionTitle,sectionList, deleteSection, deletesections, getSectionDetail, getSectionStudents };
+module.exports = { sectionCreate, getQuestionTitle, sectionList, deleteSection, deletesections, getSectionDetail, getSectionStudents };

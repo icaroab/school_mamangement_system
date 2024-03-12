@@ -99,7 +99,7 @@ const AdminDashboard = () => {
 
                         {/* Questions*/}
                         <Route path="/questions" element={<QuestionList />} />
-                        <Route path="/questions/:id" element={<QuestionDetail/>}/>
+                        <Route path="/questions/:userId/:qId" element={<QuestionDetail/>}/>
                         <Route path="/logout" element={<Logout />} />
 
                         <Route path='/student' element={<StudentList/>} />

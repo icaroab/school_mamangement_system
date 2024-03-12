@@ -35,7 +35,7 @@ const AddStudent = ({ situation }) => {
     const [loader, setLoader] = useState(false)
 
     useEffect(() => {
-        dispatch(getAllsections(adminID, "Section"));
+        dispatch(getAllsections(adminID, currentUser.role));
     }, [adminID, dispatch]);
 
 

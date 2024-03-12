@@ -8,20 +8,23 @@ import styled from 'styled-components';
 import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
-
+import { getAllsections } from '../../redux/sectionRelated/sectionHandle';
+import DoneIcon from '@mui/icons-material/Done';
 const StudentHomePage = () => {
     const dispatch = useDispatch();
 
     const { userDetails, currentUser, loading, response } = useSelector((state) => state.user);
-    const { subjectsList } = useSelector((state) => state.section);
+    const { sectionesList } = useSelector((state) => state.section);
+
     const [subjectAttendance, setSubjectAttendance] = useState([]);
     useEffect(() => {
         dispatch(getUserDetails(currentUser._id, "Student"));
     }, [dispatch, currentUser._id]);
 
-    const numberOfSubjects = subjectsList && subjectsList.length;
+    const numberOfSubjects = sectionesList && sectionesList.length;
 
     useEffect(() => {
+        dispatch(getAllsections(currentUser._id, currentUser.role));
         if (userDetails) {
             setSubjectAttendance(userDetails.attendance || []);
         }

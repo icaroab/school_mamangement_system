@@ -13,19 +13,27 @@ import styled from 'styled-components';
 import useQuestion from '../hook/useQuestion';
 import SpeedDialTemplate from '../../components/SpeedDialTemplate';
 import Popup from '../../components/Popup';
+import { getAllsections } from '../../redux/sectionRelated/sectionHandle';
 
 const QuestionList = () => {
   const navigate = useNavigate()
   const { currentUser } = useSelector(state => state.user)
-  const { titles, isLoading } = useQuestion()
+  const dispatch = useDispatch()
+  const titles = useSelector((state) => state.section.sectionesList);
+  const isLoading = useSelector((state) => state.section.loading);
+  // const { titles, isLoading } = useQuestion()
 
   const questionRows = titles && titles.length > 0 && titles.map((section) => {
     return {
       name: section.name,
       id: section._id,
+      isAnswered: section.isAnswered,
     };
   })
+  useEffect(() => {
+    dispatch(getAllsections(currentUser._id, currentUser.role));
 
+  }, [dispatch])
   const SectionButtonHaver = ({ row }) => {
     const actions = [
       { icon: <PostAddIcon />, name: 'Add Subjects', action: () => navigate("/Admin/addsubject/" + row.id) },
@@ -33,12 +41,11 @@ const QuestionList = () => {
     ];
     return (
       <ButtonContainer>
-        <IconButton color="secondary">
-          <DeleteIcon color="error" />
-        </IconButton>
         <BlueButton variant="contained"
-          onClick={() => navigate("/questions/" + row.id)}>
-          View
+          onClick={() => navigate("/questions/" + currentUser._id+"/"+row.id)}>
+          {
+            currentUser.role == "Admin" ? "View" : "Test"
+          }
         </BlueButton>
         <ActionMenu actions={actions} />
       </ButtonContainer>
@@ -58,32 +65,32 @@ const QuestionList = () => {
     };
     return (
       <>
-      <Container maxWidth="xl">
-        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={open}
-          onClose={handleClose}
-          onClick={handleClose}
-          PaperProps={{
-            elevation: 0,
-            sx: styles.styledPaper,
-          }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          {actions.map((action, id) => (
-            <MenuItem onClick={action.action} key={id}>
-              <ListItemIcon fontSize="small">
-                {action.icon}
-              </ListItemIcon>
-              {action.name}
-            </MenuItem>
-          ))}
-        </Menu>
-        </Box>
+        <Container maxWidth="xl">
+          <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: styles.styledPaper,
+              }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+              {actions.map((action, id) => (
+                <MenuItem onClick={action.action} key={id}>
+                  <ListItemIcon fontSize="small">
+                    {action.icon}
+                  </ListItemIcon>
+                  {action.name}
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Container>
       </>
     );

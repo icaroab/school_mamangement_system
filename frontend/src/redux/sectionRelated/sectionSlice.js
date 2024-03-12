@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    name:'Section List',
     sectionesList: [],
+    newQuestion:{
+        section:null,
+        questions:[]
+    },
     sectionStudents: [],
     sectionDetails: [],
     subjectsList: [],
@@ -24,6 +29,7 @@ const sectionSlice = createSlice({
             state.subloading = true;
         },
         getSuccess: (state, action) => {
+            console.log(action.payload)
             state.sectionesList = action.payload;
             state.loading = false;
             state.error = null;

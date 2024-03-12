@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyledTableCell, StyledTableRow } from './styles';
-import { Table, TableBody, TableContainer, TableHead, TablePagination,Box } from '@mui/material';
-
+import { Table, TableBody, TableContainer, TableHead, TablePagination,Box,Typography } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows , ...props}) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -22,9 +22,26 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows , ...props}) =>
                             .map((row) => {
                                 return (
                                     <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                        <StyledTableCell>{row.name}</StyledTableCell>
+                                        
+                                        <StyledTableCell sx={{display:'flex'}}>
+                                            <Typography sx={styles.typo}>
+                                            {
+                                                row.isAnswered&&row.isAnswered ? <DoneIcon/>:''
+                                            }
+                                            </Typography>
+                                            <Typography>
+                                            {row.name}
+
+                                            </Typography>
+                                            </StyledTableCell>
                                         <StyledTableCell sx={styles.ButtonContainer} >
-                                            <ButtonHaver row={row} />
+                                            {
+                                                !row.isAnswered?<ButtonHaver row={row} />:''
+                                            }
+                                            {
+                                                console.log(row)
+                                            }
+                                            
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 );
@@ -56,5 +73,9 @@ const styles = {
     ButtonContainer: {
        display:'flex',
        justifyContent:'end'
+    },
+    typo:{
+        minWidth:'30px',
+        color:'green'
     }
 };

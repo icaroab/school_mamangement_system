@@ -9,25 +9,25 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const QuestionForm = () => {
     const [questions, setQuestions] = useState([{
         question: "",
-        answer:[{
-            id:1,
-            desc:'',
-            isTrue:false
+        answer: [{
+            id: 1,
+            desc: '',
+            isTrue: false
         },
         {
-            id:2,
-            desc:'',
-            isTrue:false
+            id: 2,
+            desc: '',
+            isTrue: false
         },
         {
-            id:3,
-            desc:'',
-            isTrue:false
+            id: 3,
+            desc: '',
+            isTrue: false
         },
         {
-            id:4,
-            desc:'',
-            isTrue:false
+            id: 4,
+            desc: '',
+            isTrue: false
         }]
     }])
 
@@ -45,6 +45,8 @@ const QuestionForm = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState("");
     const [loader, setLoader] = useState(false)
+    const [checkError, setCheckError] = useState(false)
+    const [checkErrorMessage, setCheckErrorMessage] = useState("")
     const handleQuestionNameChange = (index) => (event) => {
         const newQuestions = [...questions];
         newQuestions[index].question = event.target.value;
@@ -54,43 +56,43 @@ const QuestionForm = () => {
     const handleAnswer = (index, id) => (event) => {
         const newQuestions = [...questions]
         const newAnswer = {
-            id:id+1,
-            desc:event.target.value,
-            isTrue:false
+            id: id + 1,
+            desc: event.target.value,
+            isTrue: false
         }
-        newQuestions[index]['answer'][id]=newAnswer
+        newQuestions[index]['answer'][id] = newAnswer
         setQuestions(newQuestions);
     };
     const handleAnswerCheck = (index, id) => event => {
         const newQuestions = [...questions]
-        newQuestions[index]['answer'][id].isTrue=event.target.checked
+        newQuestions[index]['answer'][id].isTrue = event.target.checked
         setQuestions(newQuestions);
     }
     const handleAddQuestion = () => {
-            setQuestions([...questions, {
-                question: "",
-                answer:[{
-                    id:1,
-                    desc:'',
-                    isTrue:false
-                },
-                {
-                    id:2,
-                    desc:'',
-                    isTrue:false
-                },
-                {
-                    id:3,
-                    desc:'',
-                    isTrue:false
-                },
-                {
-                    id:4,
-                    desc:'',
-                    isTrue:false
-                }]
-                
-            }]);
+        setQuestions([...questions, {
+            question: "",
+            answer: [{
+                id: 1,
+                desc: '',
+                isTrue: false
+            },
+            {
+                id: 2,
+                desc: '',
+                isTrue: false
+            },
+            {
+                id: 3,
+                desc: '',
+                isTrue: false
+            },
+            {
+                id: 4,
+                desc: '',
+                isTrue: false
+            }]
+
+        }]);
 
         // }
     };
@@ -109,6 +111,18 @@ const QuestionForm = () => {
 
     const submitHandler = (event) => {
         event.preventDefault();
+        setShowPopup(false)
+        let check = new Array(questions.length).fill(false)
+        questions.forEach((question, index) => {
+            question.answer.forEach((answer) => {
+                if (answer.isTrue) check[index] = true
+            })
+        })
+        if (check.includes(false)) {
+            setShowPopup(true)
+            setCheckErrorMessage("You must check at least one item.")
+            return
+        }
         setLoader(true)
         dispatch(addStuff(fields, address))
     };
@@ -202,6 +216,11 @@ const QuestionForm = () => {
                         </Grid>
                     </React.Fragment>
                 ))}
+                {/* {checkErrorMessage && <div style={{ color: 'red' }}>{checkErrorMessage}</div>}
+                  */}
+                {
+                    checkErrorMessage && <Popup message={checkErrorMessage} setShowPopup={setShowPopup} showPopup={showPopup} />
+                }
                 <Grid item xs={12}>
                     <Box display="flex" justifyContent="flex-end">
                         <Button variant="contained" color="primary" type="submit" disabled={loader}>
@@ -213,7 +232,7 @@ const QuestionForm = () => {
                         </Button>
                     </Box>
                 </Grid>
-                <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+                {/* <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} /> */}
             </Grid>
         </Box>
     );

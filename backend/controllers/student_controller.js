@@ -72,18 +72,20 @@ const getTestsByStudent = async(req, res)=>{
     try{
         const result = await Answer.find({userId: sId}).populate({
             path:'userId',
-            select:'name rollNum'
+            select:'name rollNum _id'
         }).populate({
             path:'sectionId',
-            select:'name'
+            select:'name _id'
         })
         console.log(result)
         let promises = result.map(async(item,index)=>{
             return {
                 _id:item._id,
+                userId:item.userId._id,
                 userName:item.userId.name,
                 rollNum:item.userId.rollNum,
                 section:item.sectionId.name,
+                sectionId:item.sectionId._id,
                 answer:comparedResult(item.answer,(await Question.find({ titleId: item.sectionId._id }).exec())[0].questions),
                 createdAt:item.createdAt
             }

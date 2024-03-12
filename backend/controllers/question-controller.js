@@ -14,6 +14,7 @@ const subjectCreate = async (req, res) => {
     }
 };
 const getQuestions = async (req, res) => {
+    console.log('getquestions')
     const { userId, qId } = req.params
     console.log('getQuestions',userId, qId)
     let sampleAnswer = []

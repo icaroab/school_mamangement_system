@@ -75,12 +75,8 @@ const StudentDashboard = () => {
                         <Route path='*' element={<Navigate to="/" />} />
                         <Route path="/Student/dashboard" element={<StudentHomePage />} />
                         <Route path="/Student/profile" element={<StudentProfile />} />
-
-                        {/* <Route path="/Student/subjects" element={<StudentSubjects />} /> */}
-                        {/* <Route path="/Student/attendance" element={<ViewStdAttendance />} /> */}
-
                         <Route path="/questions" element={<QuestionList />} />
-                        <Route path="/questions/:id" element={<QuestionDetail />} />
+                        <Route path="/questions/:userId/:qId" element={<QuestionDetail />} />
                         <Route path="/logout" element={<Logout />} />
                     </Routes>
                 </Box>

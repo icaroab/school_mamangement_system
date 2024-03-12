@@ -12,16 +12,13 @@ import {
     getSubDetailsRequest
 } from './sectionSlice';
 
-export const getAllsections = (id, address) => async (dispatch) => {
+export const getAllsections = (id, user) => async (dispatch) => {
     dispatch(getRequest());
 
     try {
-        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/${address}List/${id}`);
-        if (result.data.message) {
-            dispatch(getFailedTwo(result.data.message));
-        } else {
+        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/titles/${user}/${id}`);
+        console.log(result)
             dispatch(getSuccess(result.data));
-        }
     } catch (error) {
         dispatch(getError(error));
     }

@@ -73,7 +73,7 @@ router.post('/SubjectCreate', subjectCreate);
 
 //Question
 router.get('/questions/:userId/:qId', getQuestions);
-router.get('/titles', getQuestionTitle)
+router.get('/titles/:user/:id', getQuestionTitle)
 router.post('/question/submit/:userId/:qId', postAnswer)
 router.get('/question/submit/:userId/:qId', getAnswer)
 

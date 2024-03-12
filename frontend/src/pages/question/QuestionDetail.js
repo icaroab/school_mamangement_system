@@ -8,10 +8,10 @@ import styled from 'styled-components';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const QuestionDetail = () => {
-    const { id } = useParams()
+    const { userId, qId } = useParams()
     const navigate = useNavigate()
     const { currentRole, currentUser } = useSelector(state => state.user);
-    const { questions, getQuestions, submitAnswer } = useQuestion(id)
+    const { questions, getQuestions, submitAnswer } = useQuestion(qId)
     const [myAnswer, setMyAnswer] = useState([])
     const handleCheck = (qId, id) => event => {
         const currentCheck = {
@@ -47,12 +47,12 @@ const QuestionDetail = () => {
             })
         })
         navigate(-1)
-        submitAnswer(currentUser._id, id, answerTemplate)
+        submitAnswer(currentUser._id, qId, answerTemplate)
     }
 
     useEffect(() => {
-        getQuestions(currentUser._id, id)
-    }, [currentUser._id])
+        getQuestions(userId, qId)
+    }, [userId])
     return (<Box component="div" sx={styles.boxField}>
         {/* <StyledPaper elevation={1}> */}
 

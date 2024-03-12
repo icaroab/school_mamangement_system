@@ -51,12 +51,14 @@ const ViewStudent = () => {
 
     return (
         <>{
-            myTests.length > 0 ? <Container sx={styles.container}>
+            myTests.length > 0 ? <Container sx={styles.container}>{
+                console.log('mytests',myTests)
+            }
                 <Typography variant='h5' color={'blue'}>{myTests[0].userName}    <Typography variant='p' color={'grey'}>(Roll: {myTests[0].rollNum}) </Typography></Typography>
                 <Container sx={styles.container}>
                     {
                         myTests.map((item, itemIndex) => {
-
+                            console.log(item)
                             return <Card sx={styles.card} key={itemIndex}>
                                 <CardContent>
                                     <Typography variant="h5" component="div">
@@ -82,7 +84,7 @@ const ViewStudent = () => {
                                     }
                                 </CardContent>
                                 <CardActions>
-                                    <Link to={`/questions/${item._id}`}><Button size="small">Learn More</Button></Link>
+                                    <Link to={`/questions/${item.userId}/${item.sectionId}`}><Button size="small">Learn More</Button></Link>
                                     
                                 </CardActions>
                             </Card>

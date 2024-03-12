@@ -26,7 +26,7 @@ const ShowClasses = () => {
   const adminID = currentUser._id
 
   useEffect(() => {
-    dispatch(getAllsections(adminID, "Section"));
+    dispatch(getAllsections(adminID, currentUser.role));
   }, [adminID, dispatch]);
 
   if (error) {
