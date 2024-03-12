@@ -59,8 +59,8 @@ file:///e:\MERN-School-Management-System\frontend\src\pages\student1\StudentDeta
 file:///e:\MERN-School-Management-System\frontend\src\pages\student1\StudentList.js
 file:///e:\MERN-School-Management-System\frontend\src\redux\complainRelated\complainHandle.js
 file:///e:\MERN-School-Management-System\frontend\src\redux\complainRelated\complainSlice.js
-file:///e:\MERN-School-Management-System\frontend\src\redux\sclassRelated\sclassHandle.js
-file:///e:\MERN-School-Management-System\frontend\src\redux\sclassRelated\sclassSlice.js
+file:///e:\MERN-School-Management-System\frontend\src\redux\sectionRelated\sectionHandle.js
+file:///e:\MERN-School-Management-System\frontend\src\redux\sectionRelated\sectionSlice.js
 file:///e:\MERN-School-Management-System\frontend\src\redux\sectionRelated\sectionHandle.js
 file:///e:\MERN-School-Management-System\frontend\src\redux\sectionRelated\sectionSlice.js
 file:///e:\MERN-School-Management-System\frontend\src\redux\store.js

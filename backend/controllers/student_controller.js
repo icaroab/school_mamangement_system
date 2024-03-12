@@ -66,28 +66,33 @@ const getStudents = async (req, res) => {
     }
 };
 const getTestsByStudent = async(req, res)=>{
+    console.log('getTestsByStudent')
     const {sId} = req.params
+    console.log(req.params)
     try{
         const result = await Answer.find({userId: sId}).populate({
             path:'userId',
             select:'name rollNum'
         }).populate({
             path:'sectionId',
-            select:'sclassName'
+            select:'name'
         })
+        console.log(result)
         let promises = result.map(async(item,index)=>{
             return {
                 _id:item._id,
                 userName:item.userId.name,
                 rollNum:item.userId.rollNum,
-                section:item.sectionId.sclassName,
+                section:item.sectionId.name,
                 answer:comparedResult(item.answer,(await Question.find({ titleId: item.sectionId._id }).exec())[0].questions),
                 createdAt:item.createdAt
             }
         })
         const modifiedResult = await Promise.all(promises)
+        console.log(modifiedResult)
         res.json(modifiedResult)
     }catch(err){
+        console.log('drr    xvxcv',err)
         res.status(500).json(err);
 
     }
@@ -144,7 +149,7 @@ const deleteStudents = async (req, res) => {
 
 const deleteStudentsByClass = async (req, res) => {
     try {
-        const result = await Student.deleteMany({ sclassName: req.params.id })
+        const result = await Student.deleteMany({ sectionName: req.params.id })
         if (result.deletedCount === 0) {
             res.send({ message: "No students found to delete" })
         } else {

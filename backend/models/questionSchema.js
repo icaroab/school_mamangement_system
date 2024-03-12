@@ -29,7 +29,7 @@ const questionSchema = new mongoose.Schema({
     ],
     titleId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'sclass'
+        ref:'section'
     }
 }, { timestamps: true });
 

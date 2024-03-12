@@ -13,9 +13,9 @@ const subjectSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    sclassName: {
+    sectionName: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'sclass',
+        ref: 'section',
         required: true,
     },
     school: {

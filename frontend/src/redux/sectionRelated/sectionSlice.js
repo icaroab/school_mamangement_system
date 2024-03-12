@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    sectionList: [],
-    sclassStudents: [],
+    sectionesList: [],
+    sectionStudents: [],
     sectionDetails: [],
     subjectsList: [],
     subjectDetails: [],
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 const sectionSlice = createSlice({
-    name: 'sclass',
+    name: 'section',
     initialState,
     reducers: {
         getRequest: (state) => {
@@ -24,13 +24,13 @@ const sectionSlice = createSlice({
             state.subloading = true;
         },
         getSuccess: (state, action) => {
-            state.sclassesList = action.payload;
+            state.sectionesList = action.payload;
             state.loading = false;
             state.error = null;
             state.getresponse = null;
         },
         getStudentsSuccess: (state, action) => {
-            state.sclassStudents = action.payload;
+            state.sectionStudents = action.payload;
             state.loading = false;
             state.error = null;
             state.getresponse = null;
@@ -48,8 +48,8 @@ const sectionSlice = createSlice({
             state.error = null;
         },
         getFailedTwo: (state, action) => {
-            state.sclassesList = [];
-            state.sclassStudents = [];
+            state.sectionesList = [];
+            state.sectionStudents = [];
             state.getresponse = action.payload;
             state.loading = false;
             state.error = null;
@@ -59,7 +59,7 @@ const sectionSlice = createSlice({
             state.error = action.payload;
         },
         detailsSuccess: (state, action) => {
-            state.sclassDetails = action.payload;
+            state.sectionDetails = action.payload;
             state.loading = false;
             state.error = null;
         },
@@ -70,7 +70,7 @@ const sectionSlice = createSlice({
         },
         resetSubjects: (state) => {
             state.subjectsList = [];
-            state.sclassesList = [];
+            state.sectionesList = [];
         },
     },
 });

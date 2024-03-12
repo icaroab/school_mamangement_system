@@ -10,7 +10,7 @@ import Classroom from "../../../assets/classroom.png";
 import styled from "styled-components";
 
 const AddSection = () => {
-    const [sclassName, setSclassName] = useState("");
+    const [sectionName, setSectionName] = useState("");
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -26,7 +26,7 @@ const AddSection = () => {
     const [showPopup, setShowPopup] = useState(false);
 
     const fields = {
-        sclassName,
+        sectionName,
         adminID,
     };
 
@@ -72,9 +72,9 @@ const AddSection = () => {
                             <TextField
                                 label="Create a Section"
                                 variant="outlined"
-                                value={sclassName}
+                                value={sectionName}
                                 onChange={(event) => {
-                                    setSclassName(event.target.value);
+                                    setSectionName(event.target.value);
                                 }}
                                 required
                             />

@@ -89,12 +89,6 @@ const LoginPage = ({ role }) => {
             setGuestLoader(true)
             dispatch(loginUser(fields, role))
         }
-        else if (role === "Teacher") {
-            const email = "tony@12"
-            const fields = { email, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
     }
 
     useEffect(() => {
@@ -104,9 +98,7 @@ const LoginPage = ({ role }) => {
             }
             else if (currentRole === 'Student') {
                 navigate('/Student/dashboard');
-            } else if (currentRole === 'Teacher') {
-                navigate('/Teacher/dashboard');
-            }
+            } 
         }
         else if (status === 'failed') {
             setMessage(response)

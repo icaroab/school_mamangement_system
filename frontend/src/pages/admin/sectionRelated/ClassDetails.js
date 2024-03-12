@@ -22,12 +22,12 @@ const ClassDetails = () => {
     const params = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { subjectsList, sclassStudents, loading, error, response, getresponse } = useSelector((state) => state.sclass);
+    const { subjectsList, sectionStudents, loading, error, response, getresponse } = useSelector((state) => state.section);
 
     const classID = params.id
 
     useEffect(() => {
-        dispatch(getClassDetails(classID, "Sclass"));
+        dispatch(getClassDetails(classID, "Section"));
         dispatch(getSubjectList(classID, "ClassSubjects"))
         dispatch(getClassStudents(classID));
     }, [dispatch, classID])
@@ -123,7 +123,7 @@ const ClassDetails = () => {
         { id: 'rollNum', label: 'Roll Number', minWidth: 100 },
     ]
 
-    const studentRows = sclassStudents.map((student) => {
+    const studentRows = sectionStudents.map((student) => {
         return {
             name: student.name,
             rollNum: student.rollNum,
@@ -204,7 +204,7 @@ const ClassDetails = () => {
 
     const ClassDetailsSection = () => {
         const numberOfSubjects = subjectsList.length;
-        const numberOfStudents = sclassStudents.length;
+        const numberOfStudents = sectionStudents.length;
 
         return (
             <>

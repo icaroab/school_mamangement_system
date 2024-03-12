@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getClassStudents, getSubjectDetails } from '../../../redux/sclassRelated/sclassHandle';
+import { getClassStudents, getSubjectDetails } from '../../../redux/sectionRelated/sectionHandle';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Tab, Container, Typography, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
@@ -18,7 +18,7 @@ const ViewSubject = () => {
   const navigate = useNavigate()
   const params = useParams()
   const dispatch = useDispatch();
-  const { subloading, subjectDetails, sclassStudents, getresponse, error } = useSelector((state) => state.sclass);
+  const { subloading, subjectDetails, sectionStudents, getresponse, error } = useSelector((state) => state.section);
 
   const { classID, subjectID } = params
 
@@ -47,7 +47,7 @@ const ViewSubject = () => {
     { id: 'name', label: 'Name', minWidth: 170 },
   ]
 
-  const studentRows = sclassStudents.map((student) => {
+  const studentRows = sectionStudents.map((student) => {
     return {
       rollNum: student.rollNum,
       name: student.name,
@@ -142,7 +142,7 @@ const ViewSubject = () => {
   }
 
   const SubjectDetailsSection = () => {
-    const numberOfStudents = sclassStudents.length;
+    const numberOfStudents = sectionStudents.length;
 
     return (
       <>
@@ -162,7 +162,7 @@ const ViewSubject = () => {
           Number of Students: {numberOfStudents}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          Class Name : {subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName}
+          Class Name : {subjectDetails && subjectDetails.sectionName && subjectDetails.sectionName.sectionName}
         </Typography>
         {subjectDetails && subjectDetails.teacher ?
           <Typography variant="h6" gutterBottom>

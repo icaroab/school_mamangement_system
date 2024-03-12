@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, getUserDetails, updateUser } from '../../../redux/userRelated/userHandle';
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { getSubjectList } from '../../../redux/sclassRelated/sclassHandle';
+import { getSubjectList } from '../../../redux/sectionRelated/sectionHandle';
 import { Box, Button, Collapse, IconButton, Table, Card, CardContent, CardActions, TableBody, TableHead, Typography, Tab, Paper, BottomNavigation, BottomNavigationAction, Container } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import GradeIcon from '@mui/icons-material/Grade';
@@ -44,8 +44,8 @@ const ViewStudent = () => {
     const { myTests } = useStudent(studentID)
 
     useEffect(() => {
-        if (userDetails && userDetails.sclassName && userDetails.sclassName._id !== undefined) {
-            dispatch(getSubjectList(userDetails.sclassName._id, "ClassSubjects"));
+        if (userDetails && userDetails.sectionName && userDetails.sectionName._id !== undefined) {
+            dispatch(getSubjectList(userDetails.sectionName._id, "ClassSubjects"));
         }
     }, [dispatch, userDetails]);
 

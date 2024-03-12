@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from '../../../redux/userRelated/userHandle';
-import { getAllSclasses } from '../../../redux/sclassRelated/sclassHandle';
+import { getAllsections } from '../../../redux/sectionRelated/sectionHandle';
 import { BlueButton, GreenButton } from '../../../components/buttonStyles';
 import TableTemplate from '../../../components/TableTemplate';
 
@@ -20,13 +20,13 @@ const ShowClasses = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
-  const { sclassesList, loading, error, getresponse } = useSelector((state) => state.sclass);
+  const { sectionesList, loading, error, getresponse } = useSelector((state) => state.section);
   const { currentUser } = useSelector(state => state.user)
 
   const adminID = currentUser._id
 
   useEffect(() => {
-    dispatch(getAllSclasses(adminID, "Sclass"));
+    dispatch(getAllsections(adminID, "Section"));
   }, [adminID, dispatch]);
 
   if (error) {
@@ -41,25 +41,25 @@ const ShowClasses = () => {
     setShowPopup(true)
   }
 
-  const sclassColumns = [
+  const sectionColumns = [
     { id: 'name', label: 'Questions List', minWidth: 170 },
   ]
 
-  const sclassRows = sclassesList && sclassesList.length > 0 && sclassesList.map((sclass) => {
+  const sectionRows = sectionesList && sectionesList.length > 0 && sectionesList.map((section) => {
     return {
-      name: sclass.sclassName,
-      id: sclass._id,
+      name: section.sectionName,
+      id: section._id,
     };
   })
 
-  const SclassButtonHaver = ({ row }) => {
+  const SectionButtonHaver = ({ row }) => {
     const actions = [
       { icon: <PostAddIcon />, name: 'Add Subjects', action: () => navigate("/Admin/addsubject/" + row.id) },
       { icon: <PersonAddAlt1Icon />, name: 'Add Student', action: () => navigate("/Admin/class/addstudents/" + row.id) },
     ];
     return (
       <ButtonContainer>
-        <IconButton onClick={() => deleteHandler(row.id, "Sclass")} color="secondary">
+        <IconButton onClick={() => deleteHandler(row.id, "Section")} color="secondary">
           <DeleteIcon color="error" />
         </IconButton>
         <BlueButton variant="contained"
@@ -132,7 +132,7 @@ const ShowClasses = () => {
     },
     {
       icon: <DeleteIcon color="error" />, name: 'Delete All Classes',
-      action: () => deleteHandler(adminID, "Sclasses")
+      action: () => deleteHandler(adminID, "sections")
     },
   ];
 
@@ -150,8 +150,8 @@ const ShowClasses = () => {
             </Box>
             :
             <>
-              {Array.isArray(sclassesList) && sclassesList.length > 0 &&
-                <TableTemplate buttonHaver={SclassButtonHaver} columns={sclassColumns} rows={sclassRows} />
+              {Array.isArray(sectionesList) && sectionesList.length > 0 &&
+                <TableTemplate buttonHaver={SectionButtonHaver} columns={sectionColumns} rows={sectionRows} />
               }
               <SpeedDialTemplate actions={actions} />
             </>}

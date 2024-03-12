@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
-import { getClassDetails, getClassStudents, getSubjectList } from "../../../redux/sclassRelated/sclassHandle";
+import { getClassDetails, getClassStudents, getSubjectList } from "../../../redux/sectionRelated/sectionHandle";
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import {
     Box, Container, Typography, Tab, IconButton
@@ -9,7 +9,7 @@ import {
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { resetSubjects } from "../../../redux/sclassRelated/sclassSlice";
+import { resetSubjects } from "../../../redux/sectionRelated/sectionSlice";
 import { BlueButton, GreenButton, PurpleButton } from "../../../components/buttonStyles";
 import TableTemplate from "../../../components/TableTemplate";
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
@@ -23,12 +23,12 @@ const ClassDetails = () => {
     const params = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { subjectsList, sclassStudents, sclassDetails, loading, error, response, getresponse } = useSelector((state) => state.sclass);
+    const { subjectsList, sectionStudents, sectionDetails, loading, error, response, getresponse } = useSelector((state) => state.section);
 
     const classID = params.id
 
     useEffect(() => {
-        dispatch(getClassDetails(classID, "Sclass"));
+        dispatch(getClassDetails(classID, "Section"));
         dispatch(getSubjectList(classID, "ClassSubjects"))
         dispatch(getClassStudents(classID));
     }, [dispatch, classID])
@@ -124,7 +124,7 @@ const ClassDetails = () => {
         { id: 'rollNum', label: 'Roll Number', minWidth: 100 },
     ]
 
-    const studentRows = sclassStudents.map((student) => {
+    const studentRows = sectionStudents.map((student) => {
         return {
             name: student.name,
             rollNum: student.rollNum,
@@ -205,7 +205,7 @@ const ClassDetails = () => {
 
     const ClassDetailsSection = () => {
         const numberOfSubjects = subjectsList.length;
-        const numberOfStudents = sclassStudents.length;
+        const numberOfStudents = sectionStudents.length;
 
         return (
             <>

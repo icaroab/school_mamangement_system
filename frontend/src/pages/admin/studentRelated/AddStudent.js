@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../../redux/userRelated/userHandle';
 import Popup from '../../../components/Popup';
 import { underControl } from '../../../redux/userRelated/userSlice';
-import { getAllSclasses } from '../../../redux/sclassRelated/sclassHandle';
+import { getAllsections } from '../../../redux/sectionRelated/sectionHandle';
 import { CircularProgress } from '@mui/material';
 
 const AddStudent = ({ situation }) => {
@@ -14,7 +14,7 @@ const AddStudent = ({ situation }) => {
 
     const userState = useSelector(state => state.user);
     const { status, currentUser, response, error } = userState;
-    const { sclassesList } = useSelector((state) => state.sclass);
+    const { sectionesList } = useSelector((state) => state.section);
 
     const [name, setName] = useState('');
     const [rollNum, setRollNum] = useState('');
@@ -35,7 +35,7 @@ const AddStudent = ({ situation }) => {
     const [loader, setLoader] = useState(false)
 
     useEffect(() => {
-        dispatch(getAllSclasses(adminID, "Sclass"));
+        dispatch(getAllsections(adminID, "Section"));
     }, [adminID, dispatch]);
 
 

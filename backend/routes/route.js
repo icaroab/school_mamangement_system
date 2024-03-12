@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 const { adminRegister, adminLogIn, getAdminDetail} = require('../controllers/admin-controller.js');
 
-const { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents } = require('../controllers/class-controller.js');
+const { sectionCreate, sectionList,getQuestionTitle, deleteSection, deletesections, getSectionDetail, getSectionStudents} = require('../controllers/section-controller.js');
 const {
     studentRegister,
     studentLogIn,
@@ -21,7 +21,7 @@ const {
     removeStudentAttendanceBySubject,
     removeStudentAttendance ,
     getTestsByStudent} = require('../controllers/student_controller.js');
-const { subjectCreate,getQuestions,getQuestionTitle,postAnswer,getAnswer, classSubjects, deleteSubjectsByClass, getSubjectDetail, deleteSubject, freeSubjectList, allSubjects, deleteSubjects } = require('../controllers/subject-controller.js');
+// const { subjectCreate,getQuestions,getQuestionTitle,postAnswer,getAnswer, classSubjects, deleteSubjectsByClass, getSubjectDetail, deleteSubject, freeSubjectList, allSubjects, deleteSubjects } = require('../controllers/subject-controller.js');
 const { teacherRegister, teacherLogIn, getTeachers, getTeacherDetail, deleteTeachers, deleteTeachersByClass, deleteTeacher, updateTeacherSubject, teacherAttendance } = require('../controllers/teacher-controller.js');
 
 // Admin
@@ -29,10 +29,8 @@ router.post('/AdminReg', adminRegister);
 router.post('/AdminLogin', adminLogIn);
 
 router.get("/Admin/:id", getAdminDetail)
-// router.delete("/Admin/:id", deleteAdmin)
-
-// router.put("/Admin/:id", updateAdmin)
-
+//Question
+const {getQuestions,postAnswer,getAnswer, subjectCreate} = require('../controllers/question-controller.js');
 // Student
 
 router.post('/StudentReg', studentRegister);
@@ -74,30 +72,30 @@ router.put("/TeacherSubject", updateTeacherSubject)
 router.post('/TeacherAttendance/:id', teacherAttendance)
 
 
-// Sclass
+// Section
 
-router.post('/SclassCreate', sclassCreate);
+router.post('/SectionCreate', sectionCreate);
 
-router.get('/SclassList/:id', sclassList);
-router.get("/Sclass/:id", getSclassDetail)
+router.get('/SectionList/:id', sectionList);
+router.get("/Section/:id", getSectionDetail)
 
-router.get("/Sclass/Students/:id", getSclassStudents)
+router.get("/Section/Students/:id", getSectionStudents)
 
-router.delete("/Sclasses/:id", deleteSclasses)
-router.delete("/Sclass/:id", deleteSclass)
+router.delete("/sections/:id", deletesections)
+router.delete("/Section/:id", deleteSection)
 
 // Subject
 
 router.post('/SubjectCreate', subjectCreate);
 
-router.get('/AllSubjects/:id', allSubjects);
-router.get('/ClassSubjects/:id', classSubjects);
-router.get('/FreeSubjectList/:id', freeSubjectList);
-router.get("/Subject/:id", getSubjectDetail)
+// router.get('/AllSubjects/:id', allSubjects);
+// router.get('/ClassSubjects/:id', classSubjects);
+// router.get('/FreeSubjectList/:id', freeSubjectList);
+// router.get("/Subject/:id", getSubjectDetail)
 
-router.delete("/Subject/:id", deleteSubject)
-router.delete("/Subjects/:id", deleteSubjects)
-router.delete("/SubjectsClass/:id", deleteSubjectsByClass)
+// router.delete("/Subject/:id", deleteSubject)
+// router.delete("/Subjects/:id", deleteSubjects)
+// router.delete("/SubjectsClass/:id", deleteSubjectsByClass)
 //Question
 router.get('/questions/:userId/:qId', getQuestions);
 router.get('/titles', getQuestionTitle)

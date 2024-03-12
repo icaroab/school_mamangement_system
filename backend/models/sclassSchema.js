@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const sclassSchema = new mongoose.Schema({
-    sclassName: {
+const sectionSchema = new mongoose.Schema({
+    sectionName: {
         type: String,
         required: true,
     },
@@ -11,5 +11,5 @@ const sclassSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-module.exports = mongoose.model("sclass", sclassSchema);
+module.exports = mongoose.model("section", sectionSchema);
 

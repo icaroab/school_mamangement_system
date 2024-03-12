@@ -20,7 +20,7 @@ const StudentList = () => {
     const { currentUser } = useSelector(state => state.user)
     const { students, isLoading } = useStudent()
     const adminID = currentUser._id
-    const sclassColumns = [
+    const sectionColumns = [
         { id: 'name', label: 'Question Title', minWidth: 170 },
     ]
 
@@ -31,7 +31,7 @@ const StudentList = () => {
         };
     })
 
-    const SclassButtonHaver = ({ row }) => {
+    const SectionButtonHaver = ({ row }) => {
         const actions = [
             { icon: <PostAddIcon />, name: 'Add Subjects', action: () => navigate("/Admin/addsubject/" + row.id) },
             { icon: <PersonAddAlt1Icon />, name: 'Add Student', action: () => navigate("/Admin/class/addstudents/" + row.id) },
@@ -96,7 +96,7 @@ const StudentList = () => {
         },
         {
             icon: <DeleteIcon color="error" />, name: 'Delete All Classes',
-            //   action: () => deleteHandler(adminID, "Sclasses")
+            //   action: () => deleteHandler(adminID, "sections")
         },
     ];
 
@@ -108,7 +108,7 @@ const StudentList = () => {
                 <>
                     {
                         Array.isArray(students) && students.length > 0 &&
-                        <TableTemplate columns={students} rows={studentRows} buttonHaver={SclassButtonHaver} />
+                        <TableTemplate columns={students} rows={studentRows} buttonHaver={SectionButtonHaver} />
                     }
                 </>
             }

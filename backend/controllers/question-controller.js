@@ -5,19 +5,21 @@ const Section = require('../models/sectionSchema.js');
 const Answer = require('../models/answerSchema.js');
 
 const subjectCreate = async (req, res) => {
+    console.log('subjectcreate')
     try {
         const newQuestions = await Question.create(req.body);
         res.status(201).send(newQuestions)
     } catch (err) {
-        res.status(500).json(err);s
+        res.status(500).json(err);
     }
 };
 const getQuestions = async (req, res) => {
-    console.log('getQuestions',userId, qId)
     const { userId, qId } = req.params
+    console.log('getQuestions',userId, qId)
     let sampleAnswer = []
     try {
         const submittedAnswer = await Answer.find({ userId: userId, sectionId: qId })
+        console.log(submittedAnswer)
         if (submittedAnswer.length > 0) {
             sampleAnswer = await Question.find({ titleId: qId }).exec()
             res.json({
@@ -78,7 +80,7 @@ const comparedResult = (answer, questions) => {
 const allSubjects = async (req, res) => {
     try {
         let subjects = await Subject.find({ school: req.params.id })
-            .populate("sclassName", "sclassName")
+            .populate("sectionName", "sectionName")
         if (subjects.length > 0) {
             res.send(subjects)
         } else {
@@ -91,7 +93,7 @@ const allSubjects = async (req, res) => {
 
 const classSubjects = async (req, res) => {
     try {
-        let subjects = await Subject.find({ sclassName: req.params.id })
+        let subjects = await Subject.find({ sectionName: req.params.id })
         if (subjects.length > 0) {
             res.send(subjects)
         } else {
@@ -104,7 +106,7 @@ const classSubjects = async (req, res) => {
 
 const freeSubjectList = async (req, res) => {
     try {
-        let subjects = await Subject.find({ sclassName: req.params.id, teacher: { $exists: false } });
+        let subjects = await Subject.find({ sectionName: req.params.id, teacher: { $exists: false } });
         if (subjects.length > 0) {
             res.send(subjects);
         } else {
@@ -119,7 +121,7 @@ const getSubjectDetail = async (req, res) => {
     try {
         let subject = await Subject.findById(req.params.id);
         if (subject) {
-            subject = await subject.populate("sclassName", "sclassName")
+            subject = await subject.populate("sectionName", "sectionName")
             subject = await subject.populate("teacher", "name")
             res.send(subject);
         }
@@ -183,7 +185,7 @@ const deleteSubjects = async (req, res) => {
 
 const deleteSubjectsByClass = async (req, res) => {
     try {
-        const deletedSubjects = await Subject.deleteMany({ sclassName: req.params.id });
+        const deletedSubjects = await Subject.deleteMany({ sectionName: req.params.id });
 
         // Set the teachSubject field to null in teachers
         await Teacher.updateMany(

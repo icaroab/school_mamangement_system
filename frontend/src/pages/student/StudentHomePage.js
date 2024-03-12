@@ -13,7 +13,7 @@ const StudentHomePage = () => {
     const dispatch = useDispatch();
 
     const { userDetails, currentUser, loading, response } = useSelector((state) => state.user);
-    const { subjectsList } = useSelector((state) => state.sclass);
+    const { subjectsList } = useSelector((state) => state.section);
     const [subjectAttendance, setSubjectAttendance] = useState([]);
     useEffect(() => {
         dispatch(getUserDetails(currentUser._id, "Student"));

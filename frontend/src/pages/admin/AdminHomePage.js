@@ -6,14 +6,14 @@ import styled from 'styled-components';
 import CountUp from 'react-countup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getAllSclasses } from '../../redux/sclassRelated/sclassHandle';
+// import { getAllsections } from '../../redux/sectionRelated/sectionHandle';
+import { getAllsections } from '../../redux/sectionRelated/sectionHandle';
 import { getAllStudents } from '../../redux/studentRelated/studentHandle';
-import { getAllTeachers } from '../../redux/teacherRelated/teacherHandle';
 
 const AdminHomePage = () => {
     const dispatch = useDispatch();
     const { studentsList } = useSelector((state) => state.student);
-    const { sclassesList } = useSelector((state) => state.sclass);
+    const { sectionesList } = useSelector((state) => state.section);
 
     const { currentUser } = useSelector(state => state.user)
 
@@ -21,11 +21,11 @@ const AdminHomePage = () => {
 
     useEffect(() => {
         dispatch(getAllStudents(adminID));
-        dispatch(getAllSclasses(adminID, "Sclass"));
+        dispatch(getAllsections(adminID, "Section"));
     }, [adminID, dispatch]);
 
     const numberOfStudents = studentsList && studentsList.length;
-    const numberOfClasses = sclassesList && sclassesList.length;
+    const numberOfClasses = sectionesList && sectionesList.length;
 
     return (
         <>

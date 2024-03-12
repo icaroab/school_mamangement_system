@@ -19,14 +19,14 @@ const QuestionList = () => {
   const { currentUser } = useSelector(state => state.user)
   const { titles, isLoading } = useQuestion()
 
-  const questionRows = titles && titles.length > 0 && titles.map((sclass) => {
+  const questionRows = titles && titles.length > 0 && titles.map((section) => {
     return {
-      name: sclass.sclassName,
-      id: sclass._id,
+      name: section.name,
+      id: section._id,
     };
   })
 
-  const SclassButtonHaver = ({ row }) => {
+  const SectionButtonHaver = ({ row }) => {
     const actions = [
       { icon: <PostAddIcon />, name: 'Add Subjects', action: () => navigate("/Admin/addsubject/" + row.id) },
       { icon: <PersonAddAlt1Icon />, name: 'Add Student', action: () => navigate("/Admin/class/addstudents/" + row.id) },
@@ -96,7 +96,7 @@ const QuestionList = () => {
     },
     {
       icon: <DeleteIcon color="error" />, name: 'Delete All Classes',
-      //   action: () => deleteHandler(adminID, "Sclasses")
+      //   action: () => deleteHandler(adminID, "sections")
     },
   ];
 
@@ -108,7 +108,7 @@ const QuestionList = () => {
         <>
           {
             Array.isArray(titles) && titles.length > 0 &&
-            <TableTemplate columns={titles} rows={questionRows} buttonHaver={SclassButtonHaver} />
+            <TableTemplate columns={titles} rows={questionRows} buttonHaver={SectionButtonHaver} />
           }
           {currentUser.role == 'Admin' && <SpeedDialTemplate actions={actions} />}
         </>

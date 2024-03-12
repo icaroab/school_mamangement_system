@@ -7,7 +7,7 @@ const answerSchema = new mongoose.Schema({
     },
     sectionId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'sclass'
+        ref:'section'
     },
     answer:{
         type:[

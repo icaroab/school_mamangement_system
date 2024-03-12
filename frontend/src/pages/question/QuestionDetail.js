@@ -57,7 +57,7 @@ const QuestionDetail = () => {
         {/* <StyledPaper elevation={1}> */}
 
         <Box mb={2}>
-            <Typography variant="h6" >{questions[0]?.titleId.sclassName}</Typography>
+            <Typography variant="h6" >{questions[0]?.titleId.sectionName}</Typography>
         </Box>
         <Grid container spacing={2} >
             {questions.result?.length > 0 && questions.result.map((question, qId) => (
