@@ -7,6 +7,7 @@ const Answer = require('../models/answerSchema.js');
 const subjectCreate = async (req, res) => {
     try {
         const newQuestions = await Question.create(req.body);
+        await Section.findOneAndUpdate({ _id: req.body.titleId }, { hasQuestions: true }, { new: true })
         res.status(201).send(newQuestions)
     } catch (err) {
         res.status(500).json(err);
@@ -39,7 +40,7 @@ const getQuestions = async (req, res) => {
 }
 const getQuestionTitle = async (req, res) => {
     try {
-        let questionTitle = await Section.find()
+        let questionTitle = await Section.find({hasQuestions:true})
         res.send(questionTitle)
     } catch (err) {
         res.status(500).json(err)

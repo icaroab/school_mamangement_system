@@ -40,7 +40,7 @@ const getQuestionTitle = async (req, res) => {
             let sectionIds = answers.map((answer) => {
                 return answer.sectionId._id.toString()
             })
-            let questionTitle = await Section.find()
+            let questionTitle = await Section.find({hasQuestions:true})
             let result = []
              questionTitle.forEach((section, index) => {
                 result = [...result,{
@@ -54,7 +54,7 @@ const getQuestionTitle = async (req, res) => {
             })
             res.send(result)
         } else {
-            let questionTitle = await Section.find({})
+            let questionTitle = await Section.find({hasQuestions:true})
             res.send(questionTitle)
         }
     } catch (err) {
